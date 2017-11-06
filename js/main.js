@@ -87,7 +87,7 @@ function processWalk(dir){
   //move bomberman length and height of image
   switch(dir){
     case 'front':
-    if ($('#bomberman').position().top < 370){
+    if ($('#bomberman').position().top < 370 || fromTop % 5 === 4 && mapArray[index] ===3){
       $('#bomberman').animate({top: '+=10'}, charSpeed);
       fromTop ++
       //If the player steps down into a new row, add 8 to the index
@@ -99,7 +99,7 @@ function processWalk(dir){
     }
     break;
     case 'back':
-    if ($('#bomberman').position().top > 0){
+    if ($('#bomberman').position().top > 0 || fromTop % 5 === 4 && mapArray[index] ===3){
       $('#bomberman').animate({top: '-=10'}, charSpeed);
       fromTop --
       //if the player steps up into a new row, take 8 off the index
@@ -111,7 +111,7 @@ function processWalk(dir){
       }
       break;
     case 'left':
-    if ($('#bomberman').position().left >0){
+    if ($('#bomberman').position().left >0 || fromTop % 5 === 4 && mapArray[index] ===3){
       $('#bomberman').animate({left:'-=10'}, charSpeed);
       positionLeft = $('#bomberman').position().left
       fromLeft --
@@ -124,7 +124,7 @@ function processWalk(dir){
     }
     break;
     case 'right':
-    if ($('#bomberman').position().left <380){
+    if ($('#bomberman').position().left <380 || fromTop % 5 === 4 && mapArray[index] ===3){
       $('#bomberman').animate({left: '+=10'}, charSpeed);
       positionLeft = $('#bomberman').position().left
       fromLeft ++
