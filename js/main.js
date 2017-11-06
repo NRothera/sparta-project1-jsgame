@@ -90,7 +90,7 @@ function processWalk(dir){
     if ($('#bomberman').position().top > 0){
       $('#bomberman').animate({top: '-=10'}, charSpeed);
       fromTop --
-      if (fromTop %5 === 0){
+      if (fromTop %5 === 4){
         index -=8
       }
       isIndexBlock()
@@ -102,9 +102,10 @@ function processWalk(dir){
       $('#bomberman').animate({left:'-=10'}, charSpeed);
       positionLeft = $('#bomberman').position().left
       fromLeft --
-      if (fromLeft %5 === 0){
+      if (fromLeft %5 === 4){
         index --
       }
+      console.log(index)
       isIndexBlock()
     }
     break;
