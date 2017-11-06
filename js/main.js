@@ -4,40 +4,59 @@ window.onload=function(){
   drawMap()
   $('#bomberman').addClass('down');
 }
-
+var arrayIndex = 0
 var currentKey;
 var timerWalk;
 var charStep = 2;
 var charSpeed = 300;
 var bomberman = $('#bomberman');
-var container = $('#container');
+var currentPosition;
+var positionLeft = $('#bomberman').position().left;
+var positionTop = $('#bomberman').positionTop().top;
+var boxWidth = 50;
+var boxHeight = 50;
+var mapHeight = 8;
+var mapWidth = 8;
+
+
+
+
+
 
 
 //Map creation ---------------------------------------------------------
 var mapArray = [
-  [0,0,1,1,1,1,0,0],
-  [0,2,1,2,2,1,2,0],
-  [1,1,1,1,1,1,1,1],
-  [2,1,2,0,0,2,1,2],
-  [2,1,2,0,0,2,1,2],
-  [1,1,1,1,1,1,1,1],
-  [0,2,1,2,2,1,2,0],
-  [0,0,1,1,1,1,0,0],
-];
+   0,0,1,1,1,1,0,0,
+   0,2,1,2,2,1,2,0,
+   1,1,1,1,1,1,1,1,
+   2,1,2,0,0,2,1,2,
+   2,1,2,0,0,2,1,2,
+   1,1,1,1,1,1,1,1,
+   0,2,1,2,2,1,2,0,
+   0,0,1,1,1,1,0,0,
+]
+
+
+function rowColToArrayIndex(col, row) {
+	return col + 8 * row;
+}
 
 function drawMap(){
-  for (var i = 0; i < mapArray.length; i++) {
-    for (var j = 0; j < mapArray[i].length; j++) {
-      if (parseInt(mapArray[i][j]) === 0){
+  for (var eachRow = 0; eachRow < 8; eachRow++) {
+    for (var eachCol = 0; eachCol < 8; eachCol++) {
+      var arrayIndex = rowColToArrayIndex(eachCol, eachRow)
+      if (mapArray[arrayIndex] === 0) {
         $('#container').append('<div class="grass"></div>');
-      }else if (parseInt(mapArray[i][j])===1){
+      }else if (mapArray[arrayIndex] === 1){
         $('#container').append('<div class="breakable"></div>')
-      }else if (parseInt(mapArray[i][j]) ===2){
+      }else if (mapArray[arrayIndex] === 2){
         $('#container').append('<div class="unbreakable"></div>')
       }
     }
   }
 }
+
+
 
 //Character movement and boundaries ------------------------------------------------
 function processWalk(dir){
@@ -60,6 +79,8 @@ function processWalk(dir){
     case 'front':
       if ($('#bomberman').position().top < 370){
         $('#bomberman').animate({top: '+=12'}, charSpeed);
+      }if (($('#bomberman').position().top < 100) && (!$(mapArray[0][2]).hasClass('grass'))){
+        $('#bomberman').animate({top: '+=12'}, charSpeed)
       }
       break;
     case 'back':
@@ -70,11 +91,14 @@ function processWalk(dir){
     case 'left':
     if ($('#bomberman').position().left >0){
       $('#bomberman').animate({left:'-=12'}, charSpeed);
+      console.log(($('#bomberman').position().left))
     }
     break;
     case 'right':
     if ($('#bomberman').position().left <380){
       $('#bomberman').animate({left: '+=12'}, charSpeed);
+
+      console.log(($('#bomberman').position().left))
     }
     break;
   }
@@ -120,4 +144,26 @@ function charWalk(dir){
   //Make him walk at a regular pace
   timerWalk = setInterval(function(){
     processWalk(dir);}, charSpeed);
+}
+
+function isBombermanAtColRow(col, row) {
+	if(col >= 0 && col < boxWidth &&
+		row >= 0 && row < boxHeight) {
+		 var trackBombermanIndex = rowColToArrayIndex(col, row);
+		 return mapArray[trackBombermanIndex];
+	} else {
+		return false;
+	}
+}
+
+function bombermanTracker(){
+  var bombermanTrackCol = Math.floor(positionLeft/mapWidth);
+  var bombermanTrackRow = Math.floor(positionRight/mapHeight);
+  var bombermanAtBox = rowColToArrayIndex(bombermanTrackCol, bombermanTrackRow)
+
+  if (bombermanTrackCol >=0 && bombermanTrackCol < positionLeft && bombermanTrackRow >= 0 && bombermanTrackRow < positionTop){
+    if (isBombermanAtColRow(bombermanTrackCol, bombermanTrackRow)) {
+      mapArray(rowColToArrayIndex[bombermanTrackCol,bombermanTrackRow]) = 0;
+    }
+  }
 }
