@@ -1,14 +1,16 @@
 #container{
   width:400px;
   height:400px;
-  position: relative;
+  position: absolute;
+  top:0px;
+  left:0px;
 }
 
 #bomberman{
   position: absolute;
-  width:14px;
-  height:22px;
-  background: url('../images/white_bomberman.gif') no-repeat;
+  width:10px;
+  height:10px;
+  background-color:white;
   z-index: 1;
 }
 
