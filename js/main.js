@@ -22,6 +22,13 @@ var boxWidth = 40;
 var boxHeight = 40;
 var mapHeight = 8;
 var mapWidth = 8;
+var allIndexes = [0,1,2,3,4,5,6,
+  7,8,9,10,11,12,13,14,15,16,17,
+  18,19,20,21,22,23,24,25,26,27,
+  28,29,30,31,32,33,34,35,36,37,
+  38,39,40,41,42,43,44,45,46,47,
+  48,49,50,51,52,53,54,55,56,57,
+  58,59,60,61,62,63]
 var breakableIndex = [2,3,4,5,10,13,16,17,18,19,20,21,22,23,25,30,33,38,40,41,42,43,44,45,46,47,50,53,58,59,60,61]
 var grassIndex = [0,1,6,7,8,15,27,28,35,36,48,55,56,57,62,63]
 var unbreakableIndex = [9,11,12,14,24,26,29,31,32,34,37,39,49,51,52,54]
@@ -57,6 +64,7 @@ function drawMap(){
         $('#container').append('<div class="unbreakable" ></div>')
       }
     }
+    console.log($('.breakable'))
   }
 }
 
@@ -154,9 +162,7 @@ $(document).keyup(function(e){
   if (e.keyCode === currentKey){
     //This make it so a new key can be pressed after current key is released
     currentKey = false;
-
     clearInterval(timerWalk);
-
     $('#bomberman').stop(true,true)
   }
 })
@@ -177,6 +183,7 @@ function isIndexBlock(){
     mapArray[index] = 0
     player1Score += 100
     $('#player1').html(player1Score)
-    $('#block' +breakableIndex[index]).removeClass('breakable').addClass('grass')
+    $('#block' +allIndexes[index]).removeClass('breakable').addClass('grass')
+    console.log(breakableIndex[index])
   }
 }
