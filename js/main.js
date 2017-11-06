@@ -1,9 +1,10 @@
 // Global Variables ---------------------------------------------------------
 window.onload=function(){
-  var framesPerSecond = 1;
+  $('#bomberman').addClass('down');
   drawMap()
 }
-
+var fromLeft = 0;
+var fromTop = 0;
 var index = 0
 var score = 0
 var arrayIndex = 0
@@ -40,11 +41,24 @@ function rowColToArrayIndex(col, row) {
 	return col + 8 * row;
 }
 function deleteMap(){
-  $('breakable').addclass('blank')
-  $('unbreakable').addclass('blank')
-  $('grass').addclass('blank')
+  $('.breakable').addclass('wasBreakable')
+  $('.unbreakable').addclass('wasUnbreakable')
+  $('.grass').addclass('wasGrass')
 }
-
+function reDrawMap(){
+  for (var eachRow = 0; eachRow < 8; eachRow++) {
+    for (var eachCol = 0; eachCol < 8; eachCol++) {
+      var arrayIndex = rowColToArrayIndex(eachCol, eachRow)
+      if (mapArray[arrayIndex] === 0) {
+        $('.wasGrass').addclass('grass')
+      }else if (mapArray[arrayIndex] === 1){
+        $('.wasBreakable').addClass('breakable')
+      }else if (mapArray[arrayIndex] === 2){
+        $('.wasUnbreakable').addClass('unbreakable')
+      }
+    }
+  }
+}
 function drawMap(){
   for (var eachRow = 0; eachRow < 8; eachRow++) {
     for (var eachCol = 0; eachCol < 8; eachCol++) {
@@ -59,22 +73,6 @@ function drawMap(){
     }
   }
 }
-
-function updateAll(){
-  moveAll()
-}
-
-function moveAll(){
-
-  bombermanTracker()
-}
-
-
-function drawAll(){
-  drawMap()
-  $('#bomberman').addClass('down');
-}
-
 
 //Character movement and boundaries ------------------------------------------------
 function processWalk(dir){
@@ -97,26 +95,31 @@ function processWalk(dir){
     case 'front':
     if ($('#bomberman').position().top < 370){
       $('#bomberman').animate({top: '+=10'}, charSpeed);
-      positionTop = $('#bomberman').position().top
-      index += 1.6
+      fromTop ++
+      if (fromTop % 5 === 0){
+        index += 8;
+      }
       console.log(index)
     }
     break;
     case 'back':
     if ($('#bomberman').position().top > 0){
       $('#bomberman').animate({top: '-=10'}, charSpeed);
-      positionTop = $('#bomberman').position().top
-      index-= 1.6
+      fromTop --
+      if (fromTop %5 === 0){
+        index -=8
+      }
       console.log(index)
-
       }
       break;
     case 'left':
     if ($('#bomberman').position().left >0){
       $('#bomberman').animate({left:'-=10'}, charSpeed);
       positionLeft = $('#bomberman').position().left
-      index -=0.2
-      console.log(index)
+      fromLeft --
+      if (fromLeft %5 === 0){
+        index --
+      }
 
     }
     break;
@@ -124,7 +127,10 @@ function processWalk(dir){
     if ($('#bomberman').position().left <380){
       $('#bomberman').animate({left: '+=10'}, charSpeed);
       positionLeft = $('#bomberman').position().left
-      index+=0.2
+      fromLeft ++
+      if (fromLeft % 5 ===0){
+        index ++
+      }
       console.log(index)
     }
     break;
@@ -173,27 +179,10 @@ function charWalk(dir){
     processWalk(dir);}, charSpeed);
 }
 
-function isBombermanAtColRow(col, row) {
-	if(col >= 0 && col < boxWidth &&
-		row >= 0 && row < boxHeight) {
-		 var trackBombermanIndex = rowColToArrayIndex(col, row);
-		 return mapArray[trackBombermanIndex];
-	} else {
-		return false;
-	}
-}
-
-function bombermanTracker(){
-  var bombermanTrackCol = positionLeft
-  var bombermanTrackRow = positionTop
-  var bombermanAtBox = rowColToArrayIndex(bombermanTrackCol, bombermanTrackRow)
-  console.log(bombermanTrackCol)
-  console.log(bombermanTrackRow)
-
-  if (bombermanTrackCol >=0 && bombermanTrackCol < positionLeft && bombermanTrackRow >= 0 && bombermanTrackRow < positionTop){
-    if (isBombermanAtColRow(bombermanTrackCol, bombermanTrackRow)) {
-      mapArray[rowColToArrayIndex(bombermanTrackCol,bombermanTrackRow)] = 0;
-
-    }
+function isIndexBlock(){
+  if (jQuery.inArray(index, breakableIndex){
+    mapArray[index] = 0
   }
+  deleteMap()
+  reDrawMap()
 }
