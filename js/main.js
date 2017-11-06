@@ -3,6 +3,7 @@ window.onload=function(){
   $('#bomberman').addClass('down');
   drawMap()
 }
+breakableIndexCurrent = 0;
 var player1Score = 0
 var fromLeft = 0;
 var fromTop = 0;
@@ -49,9 +50,11 @@ function drawMap(){
       if (mapArray[arrayIndex] === 0) {
         $('#container').append('<div class="grass"></div>');
       }else if (mapArray[arrayIndex] === 1){
-        $('#container').append('<div class="breakable"></div>')
+        $('#container').append('<div class="breakable" id= block'+breakableIndex[breakableIndexCurrent]+ '></div>')
+        breakableIndexCurrent ++
+        console.log(breakableIndexCurrent)
       }else if (mapArray[arrayIndex] === 2){
-        $('#container').append('<div class="unbreakable"></div>')
+        $('#container').append('<div class="unbreakable" ></div>')
       }
     }
   }
@@ -79,6 +82,7 @@ function processWalk(dir){
     if ($('#bomberman').position().top < 370){
       $('#bomberman').animate({top: '+=10'}, charSpeed);
       fromTop ++
+      //If the player steps down into a new row, add 8 to the index
       if (fromTop % 5 === 0){
         index += 8;
       }
@@ -90,6 +94,7 @@ function processWalk(dir){
     if ($('#bomberman').position().top > 0){
       $('#bomberman').animate({top: '-=10'}, charSpeed);
       fromTop --
+      //if the player steps up into a new row, take 8 off the index
       if (fromTop %5 === 4){
         index -=8
       }
@@ -102,6 +107,7 @@ function processWalk(dir){
       $('#bomberman').animate({left:'-=10'}, charSpeed);
       positionLeft = $('#bomberman').position().left
       fromLeft --
+      //if the player steps left into a column, take 1 off the index
       if (fromLeft %5 === 4){
         index --
       }
@@ -114,6 +120,7 @@ function processWalk(dir){
       $('#bomberman').animate({left: '+=10'}, charSpeed);
       positionLeft = $('#bomberman').position().left
       fromLeft ++
+      //if player steps right into a column, add 1 to the index
       if (fromLeft % 5 ===0){
         index ++
       }
@@ -158,19 +165,18 @@ $(document).keyup(function(e){
 function charWalk(dir){
   if (dir === 'up') dir = 'back';
   if (dir === 'down') dir = 'front';
-
   //Moves bomberman
   processWalk(dir);
   //Make him walk at a regular pace
   timerWalk = setInterval(function(){
     processWalk(dir);}, charSpeed);
 }
-
+//This function checks if the player has gone over a breakable block
 function isIndexBlock(){
   if (jQuery.inArray(index, breakableIndex)&& mapArray[index]===1){
     mapArray[index] = 0
     player1Score += 100
     $('#player1').html(player1Score)
+    $('#block' +mapArray[index]).removeClass('breakable').addClass('grass')
   }
-  drawMap()
 }
