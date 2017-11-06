@@ -3,6 +3,7 @@
 window.onload=function(){
   drawMap()
   $('#bomberman').addClass('down');
+  bombermanTracker();
 }
 var arrayIndex = 0
 var currentKey;
@@ -11,10 +12,10 @@ var charStep = 2;
 var charSpeed = 300;
 var bomberman = $('#bomberman');
 var currentPosition;
-var positionLeft = $('#bomberman').position().left;
-var positionTop = $('#bomberman').positionTop().top;
-var boxWidth = 50;
-var boxHeight = 50;
+var positionLeft = 0;
+var positionTop = 0;
+var boxWidth = 40;
+var boxHeight = 40;
 var mapHeight = 8;
 var mapWidth = 8;
 
@@ -78,27 +79,26 @@ function processWalk(dir){
   switch(dir){
     case 'front':
       if ($('#bomberman').position().top < 370){
-        $('#bomberman').animate({top: '+=12'}, charSpeed);
-      }if (($('#bomberman').position().top < 100) && (!$(mapArray[0][2]).hasClass('grass'))){
-        $('#bomberman').animate({top: '+=12'}, charSpeed)
+        $('#bomberman').animate({top: '+=10'}, charSpeed);
+        positionTop = $('#bomberman').position().top
       }
       break;
     case 'back':
       if ($('#bomberman').position().top > 0){
-        $('#bomberman').animate({top: '-=12'}, charSpeed);
+        $('#bomberman').animate({top: '-=10'}, charSpeed);
+        positionTop = $('#bomberman').position().top
       }
       break;
     case 'left':
     if ($('#bomberman').position().left >0){
-      $('#bomberman').animate({left:'-=12'}, charSpeed);
-      console.log(($('#bomberman').position().left))
+      $('#bomberman').animate({left:'-=10'}, charSpeed);
+      positionLeft = $('#bomberman').position().left
     }
     break;
     case 'right':
     if ($('#bomberman').position().left <380){
-      $('#bomberman').animate({left: '+=12'}, charSpeed);
-
-      console.log(($('#bomberman').position().left))
+      $('#bomberman').animate({left: '+=10'}, charSpeed);
+      positionLeft = $('#bomberman').position().left
     }
     break;
   }
@@ -158,12 +158,14 @@ function isBombermanAtColRow(col, row) {
 
 function bombermanTracker(){
   var bombermanTrackCol = Math.floor(positionLeft/mapWidth);
-  var bombermanTrackRow = Math.floor(positionRight/mapHeight);
+  var bombermanTrackRow = Math.floor(positionTop/mapHeight);
   var bombermanAtBox = rowColToArrayIndex(bombermanTrackCol, bombermanTrackRow)
+  console.log(bombermanTrackCol)
+  console.log(bombermanTrackRow)
 
   if (bombermanTrackCol >=0 && bombermanTrackCol < positionLeft && bombermanTrackRow >= 0 && bombermanTrackRow < positionTop){
     if (isBombermanAtColRow(bombermanTrackCol, bombermanTrackRow)) {
-      mapArray(rowColToArrayIndex[bombermanTrackCol,bombermanTrackRow]) = 0;
+      mapArray[rowColToArrayIndex(bombermanTrackCol,bombermanTrackRow)] = 0;
     }
   }
 }

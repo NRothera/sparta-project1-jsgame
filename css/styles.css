@@ -6,8 +6,6 @@
 
 #bomberman{
   position: absolute;
-  top: 15px;
-  left: 15px;
   width:14px;
   height:22px;
   background: url('../images/white_bomberman.gif') no-repeat;
