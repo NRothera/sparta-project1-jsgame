@@ -3,8 +3,8 @@ window.onload=function(){
   $('#bomberman').addClass('down');
   drawMap()
 }
-breakableIndexCurrent = 0;
-var player1Score = 0
+var breakableIndexCurrent = 0;
+var player1Score = 0;
 var fromLeft = 0;
 var fromTop = 0;
 var index = 0
@@ -14,10 +14,7 @@ var currentKey;
 var timerWalk;
 var charStep = 2;
 var charSpeed = 300;
-var bomberman = $('#bomberman');
-var currentPosition;
-var positionLeft = 0;
-var positionTop = 0;
+var bomberman = $('#bomberman')
 var boxWidth = 40;
 var boxHeight = 40;
 var mapHeight = 8;
@@ -87,7 +84,7 @@ function processWalk(dir){
   //move bomberman length and height of image
   switch(dir){
     case 'front':
-    if ($('#bomberman').position().top < 370 || fromTop % 5 === 4 && mapArray[index] ===3){
+    if ($('#bomberman').position().top < 370){
       $('#bomberman').animate({top: '+=10'}, charSpeed);
       fromTop ++
       //If the player steps down into a new row, add 8 to the index
@@ -99,7 +96,7 @@ function processWalk(dir){
     }
     break;
     case 'back':
-    if ($('#bomberman').position().top > 0 || fromTop % 5 === 4 && mapArray[index] ===3){
+    if ($('#bomberman').position().top > 0 && mapArray[index]===0){
       $('#bomberman').animate({top: '-=10'}, charSpeed);
       fromTop --
       //if the player steps up into a new row, take 8 off the index
@@ -111,9 +108,8 @@ function processWalk(dir){
       }
       break;
     case 'left':
-    if ($('#bomberman').position().left >0 || fromTop % 5 === 4 && mapArray[index] ===3){
+    if ($('#bomberman').position().left >0 && mapArray[index]===0){
       $('#bomberman').animate({left:'-=10'}, charSpeed);
-      positionLeft = $('#bomberman').position().left
       fromLeft --
       //if the player steps left into a column, take 1 off the index
       if (fromLeft %5 === 4){
@@ -124,9 +120,8 @@ function processWalk(dir){
     }
     break;
     case 'right':
-    if ($('#bomberman').position().left <380 || fromTop % 5 === 4 && mapArray[index] ===3){
+    if ($('#bomberman').position().left <380 && mapArray[index]===0){
       $('#bomberman').animate({left: '+=10'}, charSpeed);
-      positionLeft = $('#bomberman').position().left
       fromLeft ++
       //if player steps right into a column, add 1 to the index
       if (fromLeft % 5 ===0){
@@ -185,5 +180,9 @@ function isIndexBlock(){
     $('#player1').html(player1Score)
     $('#block' +allIndexes[index]).removeClass('breakable').addClass('grass')
     console.log(breakableIndex[index])
+    if (player1Score >= 2000){
+      $('#container').hide()
+      $('h1').html('Well done!!')
+    }
   }
 }
