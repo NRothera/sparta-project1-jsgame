@@ -177,6 +177,6 @@ function isIndexBlock(){
     mapArray[index] = 0
     player1Score += 100
     $('#player1').html(player1Score)
-    $('#block' +mapArray[index]).removeClass('breakable').addClass('grass')
+    $('#block' +breakableIndex[index]).removeClass('breakable').addClass('grass')
   }
 }
