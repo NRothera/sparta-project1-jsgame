@@ -3,6 +3,7 @@ window.onload=function(){
   $('#bomberman').addClass('down');
   drawMap()
 }
+var player1Score = 0
 var fromLeft = 0;
 var fromTop = 0;
 var index = 0
@@ -40,25 +41,7 @@ var mapArray = [
 function rowColToArrayIndex(col, row) {
 	return col + 8 * row;
 }
-function deleteMap(){
-  $('.breakable').addclass('wasBreakable')
-  $('.unbreakable').addclass('wasUnbreakable')
-  $('.grass').addclass('wasGrass')
-}
-function reDrawMap(){
-  for (var eachRow = 0; eachRow < 8; eachRow++) {
-    for (var eachCol = 0; eachCol < 8; eachCol++) {
-      var arrayIndex = rowColToArrayIndex(eachCol, eachRow)
-      if (mapArray[arrayIndex] === 0) {
-        $('.wasGrass').addclass('grass')
-      }else if (mapArray[arrayIndex] === 1){
-        $('.wasBreakable').addClass('breakable')
-      }else if (mapArray[arrayIndex] === 2){
-        $('.wasUnbreakable').addClass('unbreakable')
-      }
-    }
-  }
-}
+
 function drawMap(){
   for (var eachRow = 0; eachRow < 8; eachRow++) {
     for (var eachCol = 0; eachCol < 8; eachCol++) {
@@ -100,6 +83,7 @@ function processWalk(dir){
         index += 8;
       }
       console.log(index)
+      isIndexBlock()
     }
     break;
     case 'back':
@@ -109,6 +93,7 @@ function processWalk(dir){
       if (fromTop %5 === 0){
         index -=8
       }
+      isIndexBlock()
       console.log(index)
       }
       break;
@@ -120,7 +105,7 @@ function processWalk(dir){
       if (fromLeft %5 === 0){
         index --
       }
-
+      isIndexBlock()
     }
     break;
     case 'right':
@@ -132,6 +117,7 @@ function processWalk(dir){
         index ++
       }
       console.log(index)
+      isIndexBlock()
     }
     break;
   }
@@ -180,9 +166,10 @@ function charWalk(dir){
 }
 
 function isIndexBlock(){
-  if (jQuery.inArray(index, breakableIndex){
+  if (jQuery.inArray(index, breakableIndex)&& mapArray[index]===1){
     mapArray[index] = 0
+    player1Score += 100
+    $('#player1').html(player1Score)
   }
-  deleteMap()
-  reDrawMap()
+  drawMap()
 }
