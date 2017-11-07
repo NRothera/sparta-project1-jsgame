@@ -10,7 +10,6 @@
   z-index: 1;
 }
 
-
 #bomberman{
   position: absolute;
   width:13px;
@@ -92,4 +91,11 @@
 
 body{
   background-color: black;
+}
+
+#timer{
+  position: absolute;
+  top: 420px;
+  left:180px;
+  color:yellow
 }

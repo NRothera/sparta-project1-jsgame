@@ -4,6 +4,16 @@ window.onload=function(){
   $('#bomberman2').addClass('down')
   drawMap()
 }
+setInterval(function(){
+  console.log
+  $('#timer').html("Time Left: " + startingTime)
+  startingTime--
+},1000)
+setTimeout(function(){
+  $('#container').hide()
+},30*1000)
+
+var startingTime = 30;
 var breakableIndexCurrent = 0;
 var player1Score = 0;
 var fromTop2 = 1;
