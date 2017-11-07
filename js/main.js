@@ -4,6 +4,7 @@ $(function(){
     if (e.keyCode ===13){
       startGame()
       $('#instructions').hide()
+      $('.scoreBoard').show()
     }
   })
 
@@ -22,7 +23,7 @@ $(function(){
     var currentKey;
     var timerWalk;
     var charStep = 2;
-    var charSpeed = 300;
+    var charSpeed = 200;
     var bomberman = $('#bomberman')
     var boxWidth = 40;
     var boxHeight = 40;
@@ -56,11 +57,11 @@ $(function(){
     $('#bomberman2').addClass('down')
 
     setInterval(function(){
-      console.log
       $('#timer').html("Time Left: " + startingTime)
       startingTime--
-      if (startingTime  === 0){
+      if (startingTime  === 0 && player1Score < 2000){
         $('#timer').attr('id', 'none')
+        $('h1').html('Oh no you ran out of time, press enter to try again')
       }
     },1000)
 
@@ -203,9 +204,9 @@ $(function(){
         $('#player1').html(player1Score)
         $('#block' +allIndexes[index]).removeClass('breakable').addClass('grass')
         if (player1Score >= 2000){
-          $('#container').hide()
-          $('h1').html('Well done!!')
-          alert('Player 1 won!')
+          $('#container').attr('id', 'not')
+          $('.won-game').show()
+          $('#timer').attr('id', 'none')
         }
       }
     }
