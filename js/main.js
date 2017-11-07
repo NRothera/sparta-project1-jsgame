@@ -1,12 +1,16 @@
 // Global Variables ---------------------------------------------------------
 window.onload=function(){
   $('#bomberman').addClass('down');
+  $('#bomberman2').addClass('down')
   drawMap()
 }
 var breakableIndexCurrent = 0;
 var player1Score = 0;
+var fromTop2 = 1;
+var fromLeft2 = 38
+var index2 = 7;
 var fromLeft = 0;
-var fromTop = 0;
+var fromTop = 1;
 var index = 0
 var score = 0
 var arrayIndex = 0
@@ -56,12 +60,10 @@ function drawMap(){
       }else if (mapArray[arrayIndex] === 1){
         $('#container').append('<div class="breakable" id= block'+breakableIndex[breakableIndexCurrent]+ '></div>')
         breakableIndexCurrent ++
-        console.log(breakableIndexCurrent)
       }else if (mapArray[arrayIndex] === 2){
         $('#container').append('<div class="unbreakable" ></div>')
       }
     }
-    console.log($('.breakable'))
   }
 }
 
@@ -91,12 +93,11 @@ function processWalk(dir){
       if (fromTop % 5 === 0){
         index += 8;
       }
-      console.log(index)
       isIndexBlock()
     }
     break;
     case 'back':
-    if ($('#bomberman').position().top > 0 && mapArray[index]===0){
+    if ($('#bomberman').position().top > 0){
       $('#bomberman').animate({top: '-=10'}, charSpeed);
       fromTop --
       //if the player steps up into a new row, take 8 off the index
@@ -104,25 +105,24 @@ function processWalk(dir){
         index -=8
       }
       isIndexBlock()
-      console.log(index)
       }
       break;
     case 'left':
-    if ($('#bomberman').position().left >0 && mapArray[index]===0){
+    if ($('#bomberman').position().left >0){
       $('#bomberman').animate({left:'-=10'}, charSpeed);
       fromLeft --
       //if the player steps left into a column, take 1 off the index
       if (fromLeft %5 === 4){
         index --
       }
-      console.log(index)
       isIndexBlock()
     }
     break;
     case 'right':
-    if ($('#bomberman').position().left <380 && mapArray[index]===0){
+    if ($('#bomberman').position().left <380){
       $('#bomberman').animate({left: '+=10'}, charSpeed);
       fromLeft ++
+      console.log(fromLeft)
       //if player steps right into a column, add 1 to the index
       if (fromLeft % 5 ===0){
         index ++
@@ -179,10 +179,17 @@ function isIndexBlock(){
     player1Score += 100
     $('#player1').html(player1Score)
     $('#block' +allIndexes[index]).removeClass('breakable').addClass('grass')
-    console.log(breakableIndex[index])
     if (player1Score >= 2000){
       $('#container').hide()
       $('h1').html('Well done!!')
+      alert('Player 1 won!')
     }
   }
 }
+
+window.addEventListener("keydown", function(e) {
+    // space and arrow keys
+    if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        e.preventDefault();
+    }
+}, false);
