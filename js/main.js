@@ -68,86 +68,154 @@ function drawMap(){
 }
 
 //Character movement and boundaries ------------------------------------------------
-function processWalk(dir){
-  charStep ++;
-  if (charStep === 5) charStep = 1;
+function processWalk(dir, player){
+
 
   //removes class
-  $('#bomberman').removeAttr('class');
+  if ( player === 'bomberman'){
+    charStep ++;
+    if (charStep === 5) charStep = 1;
 
-  //add class for direction moving
-  switch(charStep){
-    case 1: $('#bomberman').addClass(dir); break;
-    case 2: $('#bomberman').addClass(dir + '-one'); break;
-    case 3: $('#bomberman').addClass(dir); break;
-    case 4: $('#bomberman').addClass(dir + '-two'); break;
-  }
+    $('#bomberman').removeAttr('class');
 
-  //move bomberman length and height of image
-  switch(dir){
-    case 'front':
-    if ($('#bomberman').position().top < 370){
-      $('#bomberman').animate({top: '+=10'}, charSpeed);
-      fromTop ++
-      //If the player steps down into a new row, add 8 to the index
-      if (fromTop % 5 === 0){
-        index += 8;
-      }
-      isIndexBlock()
+    //add class for direction moving
+    switch(charStep){
+      case 1: $('#bomberman').addClass(dir); break;
+      case 2: $('#bomberman').addClass(dir + '-one'); break;
+      case 3: $('#bomberman').addClass(dir); break;
+      case 4: $('#bomberman').addClass(dir + '-two'); break;
     }
-    break;
-    case 'back':
-    if ($('#bomberman').position().top > 0){
-      $('#bomberman').animate({top: '-=10'}, charSpeed);
-      fromTop --
-      //if the player steps up into a new row, take 8 off the index
-      if (fromTop %5 === 4){
-        index -=8
-      }
-      isIndexBlock()
+
+    switch(dir){
+      case 'front':
+      if ($('#bomberman').position().top < 370){
+        $('#bomberman').animate({top: '+=10'}, charSpeed);
+        fromTop ++
+        //If the player steps down into a new row, add 8 to the index
+        if (fromTop % 5 === 0){
+          index += 8;
+        }
+        isIndexBlock()
       }
       break;
-    case 'left':
-    if ($('#bomberman').position().left >0){
-      $('#bomberman').animate({left:'-=10'}, charSpeed);
-      fromLeft --
-      //if the player steps left into a column, take 1 off the index
-      if (fromLeft %5 === 4){
-        index --
+      case 'back':
+      if ($('#bomberman').position().top > 0){
+        $('#bomberman').animate({top: '-=10'}, charSpeed);
+        fromTop --
+        //if the player steps up into a new row, take 8 off the index
+        if (fromTop %5 === 4){
+          index -=8
+        }
+        isIndexBlock()
+        }
+        break;
+      case 'left':
+      if ($('#bomberman').position().left >0){
+        $('#bomberman').animate({left:'-=10'}, charSpeed);
+        fromLeft --
+        //if the player steps left into a column, take 1 off the index
+        if (fromLeft %5 === 4){
+          index --
+        }
+        isIndexBlock()
       }
-      isIndexBlock()
-    }
-    break;
-    case 'right':
-    if ($('#bomberman').position().left <380){
-      $('#bomberman').animate({left: '+=10'}, charSpeed);
-      fromLeft ++
-      console.log(fromLeft)
-      //if player steps right into a column, add 1 to the index
-      if (fromLeft % 5 ===0){
-        index ++
+      break;
+      case 'right':
+      if ($('#bomberman').position().left <380){
+        $('#bomberman').animate({left: '+=10'}, charSpeed);
+        fromLeft ++
+        console.log(fromLeft)
+        //if player steps right into a column, add 1 to the index
+        if (fromLeft % 5 ===0){
+          index ++
+        }
+        console.log(index)
+        isIndexBlock()
       }
-      console.log(index)
-      isIndexBlock()
+      break;
     }
-    break;
-  }
-}
+  }else{
+    charStep2 ++;
+    if (charStep2 === 5) charStep2=1;
+    $('#bomberman2').removeAttr('class');
+
+    switch (charStep2) {
+        case 1: $('#bomberman2').addClass(dir+'2'); break;
+        case 2: $('#bomberman2').addClass(dir+'-one2'); break;
+        case 3: $('#bomberman2').addClass(dir+'2'); break;
+        case 4: $('#bomberman2').addClass(dir+'-two2');  break;
+      }
+      switch(dir) {
+      case 'front':
+      if ($('#bomberman2').position().top <370){
+          $('#bomberman2').animate({top: '+=10'}, charSpeed);
+          fromTop2 ++
+          if (fromTop2 % 5 ===0){
+            index2 +=8
+          }
+          isIndexBlock2()
+        }
+        break;
+      case 'back':
+        //don't let the character move any further up if they are already at the top of the screen
+        if ($('#bomberman2').position().top > 0) {
+          $('#bombermn2').animate({top: '-=10'}, charSpeed2);
+          fromTop2 --
+          console.log(fromTop2)
+          if (fromTop2 % 5 === 4){
+            index2 -=8
+          }
+          isIndexBlock2();
+          console.log(index2)
+        }
+        break;
+      case 'left':
+      //don't let the character move any further left if they are already at the left side of the screen
+      if ($('#bomberman2').position().left > 0) {
+          $('#bomberman2').animate({left: '-=10'}, charSpeed2);
+          fromLeft2 --
+          console.log(fromLeft2)
+          if (fromLeft2 %5 ===4){
+            index2 --
+          }
+          console.log(index2)
+          isIndexBlock2()
+        }
+        break;
+      case 'right':
+      if ($('#bomberman2').position().left <380){
+        $('#bomberman2').animate({left: '+=10'}, charSpeed2);
+        fromLeft2 ++
+        console.log(fromLeft2)
+        if (fromLeft%5===0){
+          index2++
+        }
+        console.log(index2)
+        isIndexBlock2
+      }
+        break;
+      }
+    }
+
+  //move bomberman length and height of image
+
 
 //Function that make movement possible -----------------------------------------------------------------
 
 // If there isn't a key pressed at the moment, this happens
 $(document).keydown(function(e){
-  if (!currentKey){
 
-    currentKey = e.keyCode;
+  currentKey = e.keyCode;
 
-    switch(e.keyCode){
-      case 87: charWalk('up'); break;
-      case 68: charWalk('right'); break;
-      case 83: charWalk('down'); break;
-      case 65: charWalk('left'); break;
-    }
+  switch(e.keyCode){
+    case 87: charWalk('up', 'bomberman'); break;
+    case 68: charWalk('right', 'bomberman'); break;
+    case 83: charWalk('down', 'bomberman'); break;
+    case 65: charWalk('left', 'bomberman'); break;
+    case 38: charWalk2('up', 'bomberman2'); break;
+    case 39: charWalk2('right', 'bomberman2'); break;
+    case 40: charWalk2('down', 'bomberman2');break;
+    case 37: charWalk2('left', 'bomberman2'); break;
   }
 })
 
