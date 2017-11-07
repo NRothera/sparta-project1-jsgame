@@ -6,6 +6,7 @@
   left:0px;
   border:2px brown solid;
 }
+
 .endOfGame{
   background-color: red;
   z-index: 1;
@@ -35,7 +36,7 @@
 #bomberman.right-one {background-position: -145px 0px;}
 #bomberman.right-two {background-position: -159.5px 0px;}
 
-#bomberman2{
+/*#bomberman2{
   position: absolute;
   left:375px;
   top:10px;
@@ -59,7 +60,7 @@
 
 #bomberman2.right {background-position: -130.5px 0px;}
 #bomberman2.right-one {background-position: -145px 0px;}
-#bomberman2.right-two {background-position: -159.5px 0px;}
+#bomberman2.right-two {background-position: -159.5px 0px;}*/
 
 
 .grass{
@@ -69,8 +70,8 @@
   float: left;
   background: url('../images/grass.png');
   outline: 1px solid grey;
-
 }
+
 .breakable{
   height:50px;
   width:50px;
@@ -119,6 +120,7 @@ body{
 source{
   display: none;
 }
+
 #sound{
   display: none;
 }
