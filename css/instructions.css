@@ -1,0 +1,27 @@
+body{
+  background-color: black;
+}
+
+#instructions{
+  background-color: #2E2E2E;
+  height: 400px;
+  width:400px;
+  margin: auto;
+  border: 8px ridge orange;
+  font-size: 20px;
+  color: yellow;
+  font-family: 'Architects Daughter', cursive;
+  padding: 0px 10px;
+  z-index: 1;
+}
+
+input{
+  margin-left: 80px;
+  background-color: black;
+  padding: 20px;
+  border-radius: 10px;
+  color:grey;
+  border: 5px groove red;
+  width:250px;
+
+}
