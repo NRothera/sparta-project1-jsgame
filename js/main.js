@@ -121,6 +121,7 @@ $(function(){
           if (fromTop % 5 === 0){
             index += 8;
           }
+          console.log(index)
           isIndexBlock();
         }
         break;
@@ -132,6 +133,7 @@ $(function(){
           if (fromTop %5 === 4){
             index -=8
           }
+          console.log(index)
           isIndexBlock();
           }
           break;
@@ -143,6 +145,7 @@ $(function(){
           if (fromLeft %5 === 4){
             index --;
           }
+          console.log(index)
           isIndexBlock();
         }
         break;
@@ -154,6 +157,7 @@ $(function(){
           if (fromLeft % 5 ===0){
             index ++
           }
+          console.log(index)
           isIndexBlock()
         }
         break;
