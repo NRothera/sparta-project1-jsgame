@@ -1,16 +1,12 @@
 // Global Variables ---------------------------------------------------------
 window.onload=function(){
   $('#bomberman').addClass('down');
-  $('#bomberman2').addClass('down')
   drawMap()
 }
 var breakableIndexCurrent = 0;
 var player1Score = 0;
-var fromTop2 = 1;
-var fromLeft2 = 38
-var index2 = 7;
 var fromLeft = 0;
-var fromTop = 1;
+var fromTop = 0;
 var index = 0
 var score = 0
 var arrayIndex = 0
@@ -60,10 +56,12 @@ function drawMap(){
       }else if (mapArray[arrayIndex] === 1){
         $('#container').append('<div class="breakable" id= block'+breakableIndex[breakableIndexCurrent]+ '></div>')
         breakableIndexCurrent ++
+        console.log(breakableIndexCurrent)
       }else if (mapArray[arrayIndex] === 2){
         $('#container').append('<div class="unbreakable" ></div>')
       }
     }
+    console.log($('.breakable'))
   }
 }
 
@@ -247,17 +245,10 @@ function isIndexBlock(){
     player1Score += 100
     $('#player1').html(player1Score)
     $('#block' +allIndexes[index]).removeClass('breakable').addClass('grass')
+    console.log(breakableIndex[index])
     if (player1Score >= 2000){
       $('#container').hide()
       $('h1').html('Well done!!')
-      alert('Player 1 won!')
     }
   }
 }
-
-window.addEventListener("keydown", function(e) {
-    // space and arrow keys
-    if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
-        e.preventDefault();
-    }
-}, false);

@@ -4,7 +4,6 @@
   position: absolute;
   top:0px;
   left:0px;
-  border:5px brown ridge;
 }
 .endOfGame{
   background-color: red;
@@ -35,6 +34,32 @@
 #bomberman.right {background-position: -130.5px 0px;}
 #bomberman.right-one {background-position: -145px 0px;}
 #bomberman.right-two {background-position: -159.5px 0px;}
+
+#bomberman2{
+  position: absolute;
+  left:375px;
+  top:10px;
+  width:13px;
+  height:22px;
+  background: url('../images/blue_bomberman.gif');
+  z-index: 1;
+}
+
+#bomberman2.front {background-position: 0px 0px}
+#bomberman2.front-one {background-position: -14.5px 0px}
+#bomberman2.front-two {background-position: -29px 0px}
+
+#bomberman2.back {background-position: -43.5px 0px}
+#bomberman2.back-one {background-position: -58px 0px}
+#bomberman2.back-two {background-position: -72.5px 0px}
+
+#bomberman2.left {background-position: -87px 0px;}
+#bomberman2.left-one {background-position: -101.5px 0px;}
+#bomberman2.left-two {background-position: -116px 0px;}
+
+#bomberman2.right {background-position: -130.5px 0px;}
+#bomberman2.right-one {background-position: -145px 0px;}
+#bomberman2.right-two {background-position: -159.5px 0px;}
 
 
 .grass{

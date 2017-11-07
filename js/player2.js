@@ -1,37 +1,38 @@
-var currentKey2;
-var Timerwalk2;
-var charStep2 = 2;
-var charSpeed2 = 300;
-var player2Score = 0
+window.onload=function(){
+  $('#bomberman2').addClass('down');
+}
 
+var currentKey;
+var timerWalk;
+var charSpeed = 300;
+var bomberman = $('#bomberman2');
 
+function processWalk(dir){
+  charStep ++;
+  if (charStep === 5) charStep = 1;
 
-$(document).keyup(function(m){
+  //removes class
+  $('#bomberman2').removeAttr('class');
 
-  if (m.keyCode == currentKey2){
-    currentKey2 = false;
-    clearInterval(Timerwalk2);
-    $('#bomberman2').stop(true,true);
+  //add class for direction moving
+  switch(charStep){
+    case 1: $('#bomberman2').addClass(dir); break;
+    case 2: $('#bomberman2').addClass(dir + '-one'); break;
+    case 3: $('#bomberman2').addClass(dir); break;
+    case 4: $('#bomberman2').addClass(dir + '-two'); break;
   }
-});
-
-function charWalk2(dir){
-  if (dir == 'up') dir = 'back';
-  if (dir == 'down') dir = 'front';
-
-  processWalk(dir);
 
   Timerwalk2 = setInterval(function(){processWalk2(dir);}, charSpeed);
 }
 
 
-function isIndexBlock2(){
-  if (jQuery.inArray(index2, breakableIndex)&& mapArray[index2]===1){
-    mapArray[index2] = 0
+function isIndexBlock(){
+  if (jQuery.inArray(index, breakableIndex)&& mapArray[index]===1){
+    mapArray[index] = 0
     player2Score += 100
-    $('#player2').html(player2Score)
-    $('#block' +allIndexes[index2]).removeClass('breakable').addClass('grass')
-    console.log(breakableIndex[index2])
+    $('#player2').html(player1Score)
+    $('#block' +allIndexes[index]).removeClass('breakable').addClass('grass')
+    console.log(breakableIndex[index])
     if (player2Score >= 2000){
       $('#container').hide()
       $('h1').html('Well done!!')
