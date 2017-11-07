@@ -110,3 +110,15 @@ body{
   font-size: 55px;
   color: red;
 }
+
+.lost-game{
+  width:400px;
+  display: none;
+}
+
+source{
+  display: none;
+}
+#sound{
+  display: none;
+}

@@ -5,6 +5,7 @@ $(function(){
       startGame()
       $('#instructions').hide()
       $('.scoreBoard').show()
+      $('#block2').removeClass('breakable').addClass('grass')
     }
   })
 
@@ -61,7 +62,12 @@ $(function(){
       startingTime--
       if (startingTime  === 0 && player1Score < 2000){
         $('#timer').attr('id', 'none')
-        $('h1').html('Oh no you ran out of time, press enter to try again')
+        $('.lost-game').show();
+        $(document).keydown(function(e){
+          if (e.keyCode ===82){
+            location.reload()
+          }
+        })
       }
     },1000)
 
@@ -90,6 +96,7 @@ $(function(){
         }
       }
     }
+
 
     //Character movement and boundaries ------------------------------------------------
     function processWalk(dir){
@@ -203,6 +210,7 @@ $(function(){
         player1Score += 100
         $('#player1').html(player1Score)
         $('#block' +allIndexes[index]).removeClass('breakable').addClass('grass')
+        $('#sound').show().hide()
         if (player1Score >= 2000){
           $('#container').hide()
           $('.won-game').show()
