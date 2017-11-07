@@ -204,9 +204,14 @@ $(function(){
         $('#player1').html(player1Score)
         $('#block' +allIndexes[index]).removeClass('breakable').addClass('grass')
         if (player1Score >= 2000){
-          $('#container').attr('id', 'not')
+          $('#container').hide()
           $('.won-game').show()
           $('#timer').attr('id', 'none')
+          $(document).keydown(function(e){
+            if (e.keyCode ===82){
+              location.reload()
+            }
+          })
         }
       }
     }

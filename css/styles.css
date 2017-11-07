@@ -105,3 +105,8 @@ body{
   width:400px;
   display: none;
 }
+
+#r{
+  font-size: 55px;
+  color: red;
+}
