@@ -11,7 +11,7 @@ $(function(){
 
   function startGame(){
     // var audioBlock = $('audio')[0];
-    var startingTime = 30;
+    var startingTime = 40;
     var breakableIndexCurrent = 0;
     var player1Score = 0;
     var fromTop2 = 1;
@@ -73,7 +73,8 @@ $(function(){
 
     setTimeout(function(){
       $('#container').hide()
-    },30*1000)
+      $('.lost-game').show()
+    },40*1000)
 
     function rowColToArrayIndex(col, row) {
     	return col + 8 * row;
@@ -139,7 +140,7 @@ $(function(){
               // isIndexBlock();
             }
           }
-          console.log(index)
+          console.log(player1Score)
         }
         break;
         case 'back':
@@ -165,7 +166,7 @@ $(function(){
               index -=8
             }
           }
-          console.log(index)
+          console.log(player1Score)
           }
           break;
         case 'left':
@@ -192,7 +193,7 @@ $(function(){
 
             }
           }
-          console.log(index)
+          console.log(player1Score)
         }
         break;
         case 'right':
@@ -218,7 +219,7 @@ $(function(){
               index ++
             }
           }
-          console.log(index)
+          console.log(player1Score)
         }
         break;
       }
@@ -265,7 +266,7 @@ $(function(){
 
     //This function checks if the player has gone over a breakable block
     function winCheck(){
-        if (player1Score >= 10000){
+        if (player1Score >= 30000){
           $('#container').hide()
           $('.won-game').show()
           $('#timer').attr('id', 'none')
