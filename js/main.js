@@ -10,6 +10,7 @@ $(function(){
   })
 
   function startGame(){
+    // var audioBlock = $('audio')[0];
     var startingTime = 30;
     var breakableIndexCurrent = 0;
     var player1Score = 0;
@@ -24,7 +25,7 @@ $(function(){
     var currentKey;
     var timerWalk;
     var charStep = 2;
-    var charSpeed = 200;
+    var charSpeed = 300;
     var bomberman = $('#bomberman')
     var boxWidth = 40;
     var boxHeight = 40;
@@ -68,7 +69,7 @@ $(function(){
           }
         })
       }
-    },1000)
+    },1000);
 
     setTimeout(function(){
       $('#container').hide()
@@ -119,10 +120,26 @@ $(function(){
           fromTop ++;
           //If the player steps down into a new row, add 8 to the index
           if (fromTop % 5 === 0){
-            index += 8;
+            if(jQuery.inArray(index+8, breakableIndex)&& mapArray[index+8]===1){
+              $('#bomberman').stop(true,true)
+              $('#bomberman').css('top', '-=10')
+              fromTop --
+              $(document).keydown(function(e){
+                if (e.keyCode ===32){
+                  mapArray[index+8] =0
+                  $('#block' +allIndexes[index+8]).removeClass('breakable').addClass('grass')
+                  player1Score += 100
+                  $('#player1').html(player1Score)
+                  winCheck()
+                  // audioBlock.play()
+                }
+              })
+            }else{
+              index+=8
+              // isIndexBlock();
+            }
           }
           console.log(index)
-          isIndexBlock();
         }
         break;
         case 'back':
@@ -131,10 +148,24 @@ $(function(){
           fromTop --
           //if the player steps up into a new row, take 8 off the index
           if (fromTop %5 === 4){
-            index -=8
+            if (jQuery.inArray(index-8, breakableIndex)&&mapArray[index-8]===1){
+              $('#bomberman').stop(true,true)
+              $('#bomberman').css('top', '+=10')
+              fromTop ++
+              $(document).keydown(function(e){
+                if (e.keyCode ===32){
+                  mapArray[index-8]=0;
+                  $('#block'+allIndexes[index-8]).removeClass('breakable').addClass('grass')
+                  player1Score += 100
+                  $('#player1').html(player1Score)
+                  winCheck()
+                }
+              })
+            }else{
+              index -=8
+            }
           }
           console.log(index)
-          isIndexBlock();
           }
           break;
         case 'left':
@@ -143,10 +174,25 @@ $(function(){
           fromLeft --;
           //if the player steps left into a column, take 1 off the index
           if (fromLeft %5 === 4){
-            index --;
+            if (jQuery.inArray(index-1, breakableIndex)&&mapArray[index-1]===1){
+              $('#bomberman').stop(true,true)
+              $('#bomberman').css('left', '+=10')
+              fromLeft ++
+              $(document).keydown(function(e){
+                if (e.keyCode ===32){
+                  mapArray[index-1]=0;
+                  $('#block'+allIndexes[index-1]).removeClass('breakable').addClass('grass')
+                  player1Score += 100
+                  $('#player1').html(player1Score)
+                  winCheck()
+                }
+              })
+            }else{
+              index --
+
+            }
           }
           console.log(index)
-          isIndexBlock();
         }
         break;
         case 'right':
@@ -155,10 +201,24 @@ $(function(){
           fromLeft ++
           //if player steps right into a column, add 1 to the index
           if (fromLeft % 5 ===0){
-            index ++
+            if (jQuery.inArray(index+1, breakableIndex)&&mapArray[index+1]===1){
+              $('#bomberman').stop(true,true)
+              $('#bomberman').css('left', '-=10')
+              fromLeft --
+              $(document).keydown(function(e){
+                if (e.keyCode ===32){
+                  mapArray[index+1]=0;
+                  $('#block'+allIndexes[index+1]).removeClass('breakable').addClass('grass')
+                  player1Score += 100
+                  $('#player1').html(player1Score)
+                  winCheck()
+                }
+              })
+            }else{
+              index ++
+            }
           }
           console.log(index)
-          isIndexBlock()
         }
         break;
       }
@@ -204,14 +264,8 @@ $(function(){
     }
 
     //This function checks if the player has gone over a breakable block
-    function isIndexBlock(){
-      if (jQuery.inArray(index, breakableIndex)&& mapArray[index]===1){
-        mapArray[index] = 0
-        player1Score += 100
-        $('#player1').html(player1Score)
-        $('#block' +allIndexes[index]).removeClass('breakable').addClass('grass')
-        $('#sound').show().hide()
-        if (player1Score >= 2000){
+    function winCheck(){
+        if (player1Score >= 10000){
           $('#container').hide()
           $('.won-game').show()
           $('#timer').attr('id', 'none')
@@ -222,7 +276,7 @@ $(function(){
           })
         }
       }
-    }
+
 
     window.addEventListener("keydown", function(e) {
         // space and arrow keys

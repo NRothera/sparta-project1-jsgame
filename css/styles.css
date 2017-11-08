@@ -14,7 +14,7 @@
 
 #bomberman{
   position: absolute;
-  width:13px;
+  width:15px;
   height:22px;
   background: url('../images/white_bomberman.gif');
   z-index: 1;
