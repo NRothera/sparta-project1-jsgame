@@ -1,0 +1,99 @@
+#container{
+  width:400px;
+  height:400px;
+  position: absolute;
+  top:0px;
+  left:0px;
+  border:2px brown solid;
+}
+
+.endOfGame{
+  background-color: red;
+  z-index: 1;
+}
+
+#bomberman{
+  position: absolute;
+  width:15px;
+  height:22px;
+  background: url('../images/white_bomberman.gif');
+  z-index: 1;
+}
+
+#bomberman.front {background-position: 0px 0px}
+#bomberman.front-one {background-position: -14.5px 0px}
+#bomberman.front-two {background-position: -29px 0px}
+
+#bomberman.back {background-position: -43.5px 0px}
+#bomberman.back-one {background-position: -58px 0px}
+#bomberman.back-two {background-position: -72.5px 0px}
+
+#bomberman.left {background-position: -87px 0px;}
+#bomberman.left-one {background-position: -101.5px 0px;}
+#bomberman.left-two {background-position: -116px 0px;}
+
+#bomberman.right {background-position: -130.5px 0px;}
+#bomberman.right-one {background-position: -145px 0px;}
+#bomberman.right-two {background-position: -159.5px 0px;}
+
+.grass{
+  height:50px;
+  width:50px;
+  position: relative;
+  float: left;
+  background: url('../images/grass.png');
+  outline: 1px solid grey;
+}
+
+.breakable{
+  height:50px;
+  width:50px;
+  position: relative;
+  float: left;
+  background: url('../images/crate.png');
+  background-position: 0px;
+  outline: 1px solid black;
+}
+
+.unbreakable{
+  height:50px;
+  width:50px;
+  position: relative;
+  float: left;
+  background: url('../images/metal.png');
+  outline: 1px solid black;
+}
+
+body{
+  background-color: black;
+}
+
+#timer{
+  position: absolute;
+  top: 420px;
+  left:180px;
+  color:yellow
+}
+
+.won-game{
+  width:400px;
+  display: none;
+}
+
+#r{
+  font-size: 55px;
+  color: red;
+}
+
+.lost-game{
+  width:400px;
+  display: none;
+}
+
+source{
+  display: none;
+}
+
+#sound{
+  display: none;
+}
