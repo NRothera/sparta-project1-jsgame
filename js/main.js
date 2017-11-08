@@ -16,8 +16,8 @@ $(function(){
     var gamesPlayed = 0;
     var breakSound = new Audio('images/smash.mov')
     var wonGame = new Audio('images/won.mp3')
-    var startingTime = 10;
-    var gameTime = 5;
+    var startingTime = 30;
+    var gameTime = 15;
     var breakableIndexCurrent = 0;
     var player1Score = 0;
     var finalScorePlayer1 = 0;
@@ -74,11 +74,11 @@ $(function(){
       if (gameTime === 0 && gamesPlayed <2){
         $('#bomberman').css('left', '0px').css('top', '0px')
         gamesPlayed ++
-        gameTime += 5;
+        gameTime += 15;
         $('#player2').show()
         if (gamesPlayed !=2){
-          finalScorePlayer1 = player1Score;
           player2Score = 0;
+          finalScorePlayer1 = player1Score;
           $('finalScore').html(finalScorePlayer1);
         }
         $('#player1').attr('id', 'finalScore');
@@ -93,30 +93,7 @@ $(function(){
         $('#block2').removeClass('breakable').addClass('grass')
       }
       if (gamesPlayed ===2){
-        $('#container').hide()
-        $('#timer').hide()
-        if (player2Score > finalScorePlayer1){
-          $('#player2Won').show()
-          $(document).keydown(function(e){
-            if (e.keyCode === 82){
-              location.reload()
-            }
-          })
-        }else if (finalScorePlayer1> player2Score){
-          $('#player1Won').show()
-          $(document).keydown(function(e){
-            if (e.keyCode === 82){
-              location.reload()
-            }
-          })
-        }else{
-          $('#draw').show()
-          $(document).keydown(function(e){
-            if (e.keyCode === 82){
-              location.reload()
-            }
-          })
-        }
+        hasWon()
       }
     },1000);
 
@@ -158,135 +135,19 @@ $(function(){
         case 4: $('#bomberman').addClass(dir + '-two'); break;
       }
 
-      //move bomberman length and height of image
+      //move bomberman length and height of image, movement checks and block checks
       switch(dir){
         case 'front':
-        if ($('#bomberman').position().top < 370){
-          $('#bomberman').animate({top: '+=10'}, charSpeed);
-          fromTop ++;
-          console.log(fromTop)
-
-          if (fromTop % 5 === 0){
-            //This stops the character from moving if he runs into a breakable block
-            if(jQuery.inArray(index+8, breakableIndex)&& mapArray[index+8]===1 || mapArray[index+8] ===2){
-              $('#bomberman').stop(true,true)
-              $('#bomberman').css('top', '-=10')
-              fromTop --
-              console.log(fromTop)
-              $(document).keydown(function(e){
-                if (e.keyCode ===32){
-                  if(jQuery.inArray(index+8, breakableIndex)&& mapArray[index+8]===1){
-                    mapArray[index+8] =0
-                    $('#block' +allIndexes[index+8]).removeClass('breakable').addClass('grass')
-                    player1Score += 100
-                    player2Score += 100
-                    breakSound.play()
-                    winCheck()
-                  }
-                }
-              })
-            //If the player steps down into a new row, and there is no block in the way, add 8 to index
-            }else{
-              index+=8
-
-            }
-          }
-
-        }
+          frontMove();
         break;
         case 'back':
-        if ($('#bomberman').position().top > 0){
-          $('#bomberman').animate({top: '-=10'}, charSpeed);
-          fromTop --
-          console.log(fromTop)
-          //if the player steps up into a new row, take 8 off the index
-          if (fromTop %5 === 4){
-            //This stops the character from moving if he runs into a breakable block
-            if (jQuery.inArray(index-8, breakableIndex)&&mapArray[index-8]===1 || mapArray[index-8] ===2){
-              $('#bomberman').stop(true,true)
-              $('#bomberman').css('top', '+=10')
-              fromTop ++
-              console.log(fromTop)
-              $(document).keydown(function(e){
-                if (e.keyCode ===32){
-                  if(jQuery.inArray(index-8, breakableIndex)&& mapArray[index-8]===1){
-                    mapArray[index-8] =0
-                    $('#block' +allIndexes[index-8]).removeClass('breakable').addClass('grass')
-                    player1Score += 100
-                    player2Score += 100
-                    breakSound.play()
-                    winCheck()
-                  }
-                }
-              })
-            //If the player steps up into a new row, and there is no block in the way, take away 8 to index
-            }else{
-              index -=8
-            }
-          }
-          }
-          break;
+          backMove();
+        break;
         case 'left':
-        if ($('#bomberman').position().left >0){
-          $('#bomberman').animate({left:'-=10'}, charSpeed);
-          fromLeft --;
-          console.log(fromLeft)
-          if (fromLeft %5 === 4){
-            //This stops the character from moving if he runs into a breakable block
-            if (jQuery.inArray(index-1, breakableIndex)&&mapArray[index-1]===1 || mapArray[index-1] ===2){
-              $('#bomberman').stop(true,true)
-              $('#bomberman').css('left', '+=10')
-              fromLeft ++
-              console.log(fromLeft)
-              $(document).keydown(function(e){
-                if (e.keyCode ===32){
-                  if (jQuery.inArray(index-1, breakableIndex)&&mapArray[index-1]===1){
-                    mapArray[index-1]=0;
-                    $('#block'+allIndexes[index-1]).removeClass('breakable').addClass('grass')
-                    player1Score += 100
-                    player2Score += 100
-                    breakSound.play()
-                    winCheck()
-                  }
-                }
-              })
-            //If the player steps left into a new column, and there is no block in the way, take 1 from the index
-            }else{
-              index --
-            }
-          }
-        }
+          leftMove()
         break;
         case 'right':
-        if ($('#bomberman').position().left <380){
-          $('#bomberman').animate({left: '+=10'}, charSpeed);
-          fromLeft ++
-          console.log(fromLeft)
-          if (fromLeft % 5 ===0){
-            //This stops the character from moving if he runs into a breakable block
-            if (jQuery.inArray(index+1, breakableIndex)&&mapArray[index+1]===1 || mapArray[index+1] ===2){
-              $('#bomberman').stop(true,true)
-              $('#bomberman').css('left', '-=10')
-              fromLeft --
-              console.log(fromLeft)
-              $(document).keydown(function(e){
-                if (e.keyCode ===32){
-                  if (jQuery.inArray(index+1, breakableIndex)&&mapArray[index+1]===1){
-                    mapArray[index+1]=0;
-                    $('#block'+allIndexes[index+1]).removeClass('breakable').addClass('grass')
-                    player1Score += 100
-                    player2Score += 100
-                    breakSound.play()
-                    winCheck()
-                  }
-                }
-              })
-            //If the player steps right into a new column, and there is no block in the way, add 1 to index
-            }else{
-              index ++
-            }
-          }
-        }
+          rightMove()
         break;
       }
     }
@@ -330,24 +191,7 @@ $(function(){
         processWalk(dir);}, charSpeed);
     }
 
-    //This function checks if the player has gone over a breakable block
-    function winCheck(){
-        $('#player1').html(player1Score)
-        $('#player2').html(player2Score)
-      }
-    //     if (tim){
-    //       $('#container').hide()
-    //       $('.won-game').show()
-    //       $('#timer').attr('id', 'none')
-    //       wonGame.play()
-    //       mainTheme.pause()
-    //       $(document).keydown(function(e){
-    //         if (e.keyCode ===82){
-    //           location.reload()
-    //         }
-    //       })
-    //     }
-    //   }
+
 
     window.addEventListener("keydown", function(e) {
         // space and arrow keys
@@ -355,6 +199,175 @@ $(function(){
             e.preventDefault();
         }
     }, false);
+
+  //At the end, check which player has won, or if its a draw
+  function hasWon(){
+    $('#container').hide()
+    $('#timer').hide()
+    if (player2Score > finalScorePlayer1){
+      $('#player2Won').show()
+      $(document).keydown(function(e){
+        if (e.keyCode === 82){
+          location.reload()
+        }
+      })
+    }else if (finalScorePlayer1> player2Score){
+      $('#player1Won').show()
+      $(document).keydown(function(e){
+        if (e.keyCode === 82){
+          location.reload()
+        }
+      })
+    }else{
+      $('#draw').show()
+      $(document).keydown(function(e){
+        if (e.keyCode === 82){
+          location.reload()
+        }
+      })
+    }
+  }
+
+  //Adds to the player score if they destroy a block
+  function winCheck(){
+        $('#player1').html(player1Score)
+        $('#player2').html(player2Score)
+      }
+
+  //Index update for moving right, block check for right
+  function rightMove(){
+      if ($('#bomberman').position().left <380){
+        $('#bomberman').animate({left: '+=10'}, charSpeed);
+        fromLeft ++
+        console.log(fromLeft)
+        if (fromLeft % 5 ===0){
+          //This stops the character from moving if he runs into a breakable block
+          if (jQuery.inArray(index+1, breakableIndex)&&mapArray[index+1]===1 || mapArray[index+1] ===2){
+            $('#bomberman').stop(true,true)
+            $('#bomberman').css('left', '-=10')
+            fromLeft --
+            console.log(fromLeft)
+            $(document).keydown(function(e){
+              if (e.keyCode ===32){
+                if (jQuery.inArray(index+1, breakableIndex)&&mapArray[index+1]===1){
+                  mapArray[index+1]=0;
+                  $('#block'+allIndexes[index+1]).removeClass('breakable').addClass('grass')
+                  player1Score += 100
+                  player2Score += 100
+                  breakSound.play()
+                  winCheck()
+                }
+              }
+            })
+          //If the player steps right into a new column, and there is no block in the way, add 1 to index
+          }else{
+            index ++
+          }
+        }
+      }
+    }
+
+  //Index update for moving left, block check for left
+  function leftMove(){
+      if ($('#bomberman').position().left >0){
+        $('#bomberman').animate({left:'-=10'}, charSpeed);
+        fromLeft --;
+        console.log(fromLeft)
+        if (fromLeft %5 === 4){
+          //This stops the character from moving if he runs into a breakable block
+          if (jQuery.inArray(index-1, breakableIndex)&&mapArray[index-1]===1 || mapArray[index-1] ===2){
+            $('#bomberman').stop(true,true)
+            $('#bomberman').css('left', '+=10')
+            fromLeft ++
+            console.log(fromLeft)
+            $(document).keydown(function(e){
+              if (e.keyCode ===32){
+                if (jQuery.inArray(index-1, breakableIndex)&&mapArray[index-1]===1){
+                  mapArray[index-1]=0;
+                  $('#block'+allIndexes[index-1]).removeClass('breakable').addClass('grass')
+                  player1Score += 100
+                  player2Score += 100
+                  breakSound.play()
+                  winCheck()
+                }
+              }
+            })
+          //If the player steps left into a new column, and there is no block in the way, take 1 from the index
+          }else{
+            index --
+          }
+        }
+      }
+    }
+
+  //Index update for moving
+  function backMove(){
+      if ($('#bomberman').position().top > 0){
+        $('#bomberman').animate({top: '-=10'}, charSpeed);
+        fromTop --
+        console.log(fromTop)
+        //if the player steps up into a new row, take 8 off the index
+        if (fromTop %5 === 4){
+          //This stops the character from moving if he runs into a breakable block
+          if (jQuery.inArray(index-8, breakableIndex)&&mapArray[index-8]===1 || mapArray[index-8] ===2){
+            $('#bomberman').stop(true,true)
+            $('#bomberman').css('top', '+=10')
+            fromTop ++
+            console.log(fromTop)
+            $(document).keydown(function(e){
+              if (e.keyCode ===32){
+                if(jQuery.inArray(index-8, breakableIndex)&& mapArray[index-8]===1){
+                  mapArray[index-8] =0
+                  $('#block' +allIndexes[index-8]).removeClass('breakable').addClass('grass')
+                  player1Score += 100
+                  player2Score += 100
+                  breakSound.play()
+                  winCheck()
+                }
+              }
+            })
+          //If the player steps up into a new row, and there is no block in the way, take away 8 to index
+          }else{
+            index -=8
+          }
+        }
+      }
+    }
+
+  function frontMove(){
+    if ($('#bomberman').position().top < 370){
+      $('#bomberman').animate({top: '+=10'}, charSpeed);
+      fromTop ++;
+      console.log(fromTop)
+
+      if (fromTop % 5 === 0){
+        //This stops the character from moving if he runs into a breakable block
+        if(jQuery.inArray(index+8, breakableIndex)&& mapArray[index+8]===1 || mapArray[index+8] ===2){
+          $('#bomberman').stop(true,true)
+          $('#bomberman').css('top', '-=10')
+          fromTop --
+          console.log(fromTop)
+          $(document).keydown(function(e){
+            if (e.keyCode ===32){
+              if(jQuery.inArray(index+8, breakableIndex)&& mapArray[index+8]===1){
+                mapArray[index+8] =0
+                $('#block' +allIndexes[index+8]).removeClass('breakable').addClass('grass')
+                player1Score += 100
+                player2Score += 100
+                breakSound.play()
+                winCheck()
+              }
+            }
+          })
+        //If the player steps down into a new row, and there is no block in the way, add 8 to index
+        }else{
+          index+=8
+
+        }
+      }
+
+    }
+  }
 
   drawMap();
   }
