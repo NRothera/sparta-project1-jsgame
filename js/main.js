@@ -8,17 +8,21 @@ $(function(){
       $('#instructions').hide()
       $('.scoreBoard').show()
       $('#block2').removeClass('breakable').addClass('grass')
-
     }
   })
 
   function startGame(){
     mainTheme.play()
+    var gamesPlayed = 0;
     var breakSound = new Audio('images/smash.mov')
     var wonGame = new Audio('images/won.mp3')
-    var startingTime = 40;
+    var startingTime = 60;
+    var gameTime = 30;
     var breakableIndexCurrent = 0;
     var player1Score = 0;
+    var finalScorePlayer1 = 0;
+    var player2Score = 0;
+    var finalScorePlayer2 = 0;
     var fromLeft = 0;
     var fromTop = 1;
     var index = 0;
@@ -28,11 +32,6 @@ $(function(){
     var timerWalk;
     var charStep = 2;
     var charSpeed = 300;
-    var bomberman = $('#bomberman')
-    var boxWidth = 40;
-    var boxHeight = 40;
-    var mapHeight = 8;
-    var mapWidth = 8;
     var allIndexes = [0,1,2,3,4,5,6,
       7,8,9,10,11,12,13,14,15,16,17,
       18,19,20,21,22,23,24,25,26,27,
@@ -56,19 +55,48 @@ $(function(){
        0,0,1,1,1,1,0,0,
     ]
 
+    var mapArray2 = [
+       0,0,1,1,1,1,0,0,
+       0,2,1,2,2,1,2,0,
+       1,1,1,1,1,1,1,1,
+       2,1,2,0,0,2,1,2,
+       2,1,2,0,0,2,1,2,
+       1,1,1,1,1,1,1,1,
+       0,2,1,2,2,1,2,0,
+       0,0,1,1,1,1,0,0,
+    ]
+
     setInterval(function(){
-      $('#timer').html("Time Left: " + startingTime)
+      $('#timer').html("Time Left: " + gameTime)
       startingTime--;
-      if (startingTime  === 0 && player1Score < 2000){
-        $('#timer').attr('id', 'none');
+      gameTime--
+      if (gameTime === 0){
+        $('#block2').removeClass('breakable').addClass('grass')
+        gamesPlayed ++
+        gameTime += 30;
+        player2Score = 0;
+        $('#player2').show()
+        finalScorePlayer1 = player1Score;
+        $('#player1').attr('id', 'finalScore');
+        $('finalScore').html(finalScorePlayer1);
+        startingTime === 30;
+        $('#container div').remove();
+        mapArray = mapArray2;
+        index=0;
+        fromTop = 1;
+        fromLeft = 0;
+        $('#bomberman').css('left', '0px').css('top', '0px')
+        breakableIndexCurrent=0;
+        drawMap()
+      }
+      if (gamesPlayed ===2){
         $('#container').hide()
-        $('.lost-game').show();
-        mainTheme.pause()
-        $(document).keydown(function(e){
-          if (e.keyCode ===82){
-            location.reload();
-          }
-        })
+        finalScorePlayer2 = player2Score;
+        if (finalScorePlayer2 > finalScorePlayer1){
+          alert('Player 2 has won!')
+        }else{
+          alert('Player 1 has won!')
+        }
       }
     },1000);
 
@@ -131,7 +159,7 @@ $(function(){
                     mapArray[index+8] =0
                     $('#block' +allIndexes[index+8]).removeClass('breakable').addClass('grass')
                     player1Score += 100
-                    $('#player1').html(player1Score)
+                    player2Score += 100
                     breakSound.play()
                     winCheck()
                   }
@@ -165,7 +193,7 @@ $(function(){
                     mapArray[index-8] =0
                     $('#block' +allIndexes[index-8]).removeClass('breakable').addClass('grass')
                     player1Score += 100
-                    $('#player1').html(player1Score)
+                    player2Score += 100
                     breakSound.play()
                     winCheck()
                   }
@@ -196,6 +224,7 @@ $(function(){
                     mapArray[index-1]=0;
                     $('#block'+allIndexes[index-1]).removeClass('breakable').addClass('grass')
                     player1Score += 100
+                    player2Score += 100
                     breakSound.play()
                     winCheck()
                   }
@@ -226,6 +255,7 @@ $(function(){
                     mapArray[index+1]=0;
                     $('#block'+allIndexes[index+1]).removeClass('breakable').addClass('grass')
                     player1Score += 100
+                    player2Score += 100
                     breakSound.play()
                     winCheck()
                   }
@@ -283,19 +313,21 @@ $(function(){
     //This function checks if the player has gone over a breakable block
     function winCheck(){
         $('#player1').html(player1Score)
-        if (player1Score >= 2000){
-          $('#container').hide()
-          $('.won-game').show()
-          $('#timer').attr('id', 'none')
-          wonGame.play()
-          mainTheme.pause()
-          $(document).keydown(function(e){
-            if (e.keyCode ===82){
-              location.reload()
-            }
-          })
-        }
+        $('#player2').html(player2Score)
       }
+    //     if (tim){
+    //       $('#container').hide()
+    //       $('.won-game').show()
+    //       $('#timer').attr('id', 'none')
+    //       wonGame.play()
+    //       mainTheme.pause()
+    //       $(document).keydown(function(e){
+    //         if (e.keyCode ===82){
+    //           location.reload()
+    //         }
+    //       })
+    //     }
+    //   }
 
     window.addEventListener("keydown", function(e) {
         // space and arrow keys

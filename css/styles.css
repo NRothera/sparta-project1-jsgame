@@ -18,6 +18,8 @@
   height:22px;
   background: url('../images/white_bomberman.gif');
   z-index: 1;
+  left: 0px;
+  top:0px;
 }
 
 #bomberman.front {background-position: 0px 0px}
@@ -99,4 +101,7 @@ source{
 
 #sound{
   display: none;
+}
+#finaScore{
+  color:red;
 }
