@@ -77,19 +77,37 @@ body{
   color:yellow
 }
 
-.won-game{
+#player1Won{
   width:400px;
   display: none;
   background-color: #2E2E2E;
   border: 3px orange ridge;
   height: 400px;
+  font-size: 40px;
+  color: yellow;
+  font-family: 'Architects Daughter', cursive;
+}
+#player2Won{
+  width:400px;
+  display: none;
+  background-color: #2E2E2E;
+  border: 3px orange ridge;
+  height: 400px;
+  font-size: 40px;
+  color: yellow;
+  font-family: 'Architects Daughter', cursive;
 }
 
-#r{
-  font-size: 55px;
-  color: red;
+#draw{
+  width:400px;
+  display: none;
+  background-color: #2E2E2E;
+  border: 3px orange ridge;
+  height: 400px;
+  font-size: 40px;
+  color: yellow;
+  font-family: 'Architects Daughter', cursive;
 }
-
 .lost-game{
   width:400px;
   display: none;
@@ -102,6 +120,6 @@ source{
 #sound{
   display: none;
 }
-#finaScore{
+#finalScore{
   color:red;
 }

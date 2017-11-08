@@ -16,8 +16,8 @@ $(function(){
     var gamesPlayed = 0;
     var breakSound = new Audio('images/smash.mov')
     var wonGame = new Audio('images/won.mp3')
-    var startingTime = 60;
-    var gameTime = 30;
+    var startingTime = 10;
+    var gameTime = 5;
     var breakableIndexCurrent = 0;
     var player1Score = 0;
     var finalScorePlayer1 = 0;
@@ -66,36 +66,56 @@ $(function(){
        0,0,1,1,1,1,0,0,
     ]
 
+    //This sets the timer for each player. Once it reaches 0 it is the next players turn. After the next players turn it compares the score and tells you who won
     setInterval(function(){
       $('#timer').html("Time Left: " + gameTime)
       startingTime--;
       gameTime--
-      if (gameTime === 0){
-        $('#block2').removeClass('breakable').addClass('grass')
+      if (gameTime === 0 && gamesPlayed <2){
+        $('#bomberman').css('left', '0px').css('top', '0px')
         gamesPlayed ++
-        gameTime += 30;
-        player2Score = 0;
+        gameTime += 5;
         $('#player2').show()
-        finalScorePlayer1 = player1Score;
+        if (gamesPlayed !=2){
+          finalScorePlayer1 = player1Score;
+          player2Score = 0;
+          $('finalScore').html(finalScorePlayer1);
+        }
         $('#player1').attr('id', 'finalScore');
-        $('finalScore').html(finalScorePlayer1);
-        startingTime === 30;
         $('#container div').remove();
         mapArray = mapArray2;
         index=0;
         fromTop = 1;
         fromLeft = 0;
-        $('#bomberman').css('left', '0px').css('top', '0px')
-        breakableIndexCurrent=0;
+        arrayIndex = 0;
+        breakableIndexCurrent = 0;
         drawMap()
+        $('#block2').removeClass('breakable').addClass('grass')
       }
       if (gamesPlayed ===2){
         $('#container').hide()
-        finalScorePlayer2 = player2Score;
-        if (finalScorePlayer2 > finalScorePlayer1){
-          alert('Player 2 has won!')
+        $('#timer').hide()
+        if (player2Score > finalScorePlayer1){
+          $('#player2Won').show()
+          $(document).keydown(function(e){
+            if (e.keyCode === 82){
+              location.reload()
+            }
+          })
+        }else if (finalScorePlayer1> player2Score){
+          $('#player1Won').show()
+          $(document).keydown(function(e){
+            if (e.keyCode === 82){
+              location.reload()
+            }
+          })
         }else{
-          alert('Player 1 has won!')
+          $('#draw').show()
+          $(document).keydown(function(e){
+            if (e.keyCode === 82){
+              location.reload()
+            }
+          })
         }
       }
     },1000);
