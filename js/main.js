@@ -13,10 +13,7 @@ $(function(){
     var startingTime = 40;
     var breakableIndexCurrent = 0;
     var player1Score = 0;
-    var fromTop2 = 1;
-    var fromLeft2 = 38;
-    var index2 = 7;
-    var fromLeft = 0;
+    var fromLeft = 1;
     var fromTop = 1;
     var index = 0;
     var score = 0;
@@ -53,14 +50,12 @@ $(function(){
        0,0,1,1,1,1,0,0,
     ]
 
-    // $('#bomberman').addClass('down');
-    // $('#bomberman2').addClass('down');
-
     setInterval(function(){
       $('#timer').html("Time Left: " + startingTime)
       startingTime--;
       if (startingTime  === 0 && player1Score < 2000){
         $('#timer').attr('id', 'none');
+        $('#container').hide()
         $('.lost-game').show();
         $(document).keydown(function(e){
           if (e.keyCode ===82){
@@ -70,10 +65,6 @@ $(function(){
       }
     },1000);
 
-    setTimeout(function(){
-      $('#container').hide()
-      $('.lost-game').show()
-    },40*1000)
 
     function rowColToArrayIndex(col, row) {
     	return col + 8 * row;
@@ -118,6 +109,7 @@ $(function(){
         if ($('#bomberman').position().top < 370){
           $('#bomberman').animate({top: '+=10'}, charSpeed);
           fromTop ++;
+
           //If the player steps down into a new row, add 8 to the index
           if (fromTop % 5 === 0){
             if(jQuery.inArray(index+8, breakableIndex)&& mapArray[index+8]===1){
@@ -132,12 +124,12 @@ $(function(){
                   player1Score += 100
                   $('#player1').html(player1Score)
                   winCheck()
-                  // audioBlock.play()
+
                 }
               })
             }else{
               index+=8
-              // isIndexBlock();
+
             }
           }
 
@@ -147,6 +139,7 @@ $(function(){
         if ($('#bomberman').position().top > 0){
           $('#bomberman').animate({top: '-=10'}, charSpeed);
           fromTop --
+
           //if the player steps up into a new row, take 8 off the index
           if (fromTop %5 === 4){
             if (jQuery.inArray(index-8, breakableIndex)&&mapArray[index-8]===1){
@@ -173,6 +166,7 @@ $(function(){
         if ($('#bomberman').position().left >0){
           $('#bomberman').animate({left:'-=10'}, charSpeed);
           fromLeft --;
+
           //if the player steps left into a column, take 1 off the index
           if (fromLeft %5 === 4){
             if (jQuery.inArray(index-1, breakableIndex)&&mapArray[index-1]===1){
@@ -199,13 +193,14 @@ $(function(){
         if ($('#bomberman').position().left <380){
           $('#bomberman').animate({left: '+=10'}, charSpeed);
           fromLeft ++
+
           //if player steps right into a column, add 1 to the index
           if (fromLeft % 5 ===0){
             if (jQuery.inArray(index+1, breakableIndex)&&mapArray[index+1]===1){
               $('#bomberman').stop(true,true)
               $('#bomberman').css('left', '-=10')
               fromLeft --
-              console.log(fromLeft)
+              
               $(document).keydown(function(e){
                 if (e.keyCode ===32){
                   mapArray[index+1]=0;
