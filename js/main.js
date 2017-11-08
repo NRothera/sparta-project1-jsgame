@@ -10,7 +10,6 @@ $(function(){
   })
 
   function startGame(){
-    // var audioBlock = $('audio')[0];
     var startingTime = 40;
     var breakableIndexCurrent = 0;
     var player1Score = 0;
@@ -125,6 +124,7 @@ $(function(){
               $('#bomberman').stop(true,true)
               $('#bomberman').css('top', '-=10')
               fromTop --
+
               $(document).keydown(function(e){
                 if (e.keyCode ===32){
                   mapArray[index+8] =0
@@ -140,7 +140,7 @@ $(function(){
               // isIndexBlock();
             }
           }
-          console.log(player1Score)
+
         }
         break;
         case 'back':
@@ -153,12 +153,12 @@ $(function(){
               $('#bomberman').stop(true,true)
               $('#bomberman').css('top', '+=10')
               fromTop ++
+
               $(document).keydown(function(e){
                 if (e.keyCode ===32){
                   mapArray[index-8]=0;
                   $('#block'+allIndexes[index-8]).removeClass('breakable').addClass('grass')
                   player1Score += 100
-                  $('#player1').html(player1Score)
                   winCheck()
                 }
               })
@@ -166,7 +166,7 @@ $(function(){
               index -=8
             }
           }
-          console.log(player1Score)
+
           }
           break;
         case 'left':
@@ -179,21 +179,20 @@ $(function(){
               $('#bomberman').stop(true,true)
               $('#bomberman').css('left', '+=10')
               fromLeft ++
+
               $(document).keydown(function(e){
                 if (e.keyCode ===32){
                   mapArray[index-1]=0;
                   $('#block'+allIndexes[index-1]).removeClass('breakable').addClass('grass')
                   player1Score += 100
-                  $('#player1').html(player1Score)
                   winCheck()
                 }
               })
             }else{
               index --
-
             }
           }
-          console.log(player1Score)
+
         }
         break;
         case 'right':
@@ -206,12 +205,12 @@ $(function(){
               $('#bomberman').stop(true,true)
               $('#bomberman').css('left', '-=10')
               fromLeft --
+              console.log(fromLeft)
               $(document).keydown(function(e){
                 if (e.keyCode ===32){
                   mapArray[index+1]=0;
                   $('#block'+allIndexes[index+1]).removeClass('breakable').addClass('grass')
                   player1Score += 100
-                  $('#player1').html(player1Score)
                   winCheck()
                 }
               })
@@ -219,7 +218,6 @@ $(function(){
               index ++
             }
           }
-          console.log(player1Score)
         }
         break;
       }
@@ -266,6 +264,7 @@ $(function(){
 
     //This function checks if the player has gone over a breakable block
     function winCheck(){
+        $('#player1').html(player1Score)
         if (player1Score >= 30000){
           $('#container').hide()
           $('.won-game').show()
@@ -278,13 +277,13 @@ $(function(){
         }
       }
 
-
     window.addEventListener("keydown", function(e) {
         // space and arrow keys
         if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
             e.preventDefault();
         }
     }, false);
+
   drawMap();
   }
 })
