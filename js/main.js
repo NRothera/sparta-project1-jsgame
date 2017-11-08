@@ -8,12 +8,14 @@ $(function(){
       $('#instructions').hide()
       $('.scoreBoard').show()
       $('#block2').removeClass('breakable').addClass('grass')
-      mainTheme.play()
+
     }
   })
 
   function startGame(){
+    mainTheme.play()
     var breakSound = new Audio('images/smash.mov')
+    var wonGame = new Audio('images/won.mp3')
     var startingTime = 40;
     var breakableIndexCurrent = 0;
     var player1Score = 0;
@@ -285,6 +287,8 @@ $(function(){
           $('#container').hide()
           $('.won-game').show()
           $('#timer').attr('id', 'none')
+          wonGame.play()
+          mainTheme.pause()
           $(document).keydown(function(e){
             if (e.keyCode ===82){
               location.reload()

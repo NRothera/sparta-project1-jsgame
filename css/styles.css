@@ -78,6 +78,9 @@ body{
 .won-game{
   width:400px;
   display: none;
+  background-color: #2E2E2E;
+  border: 3px orange ridge;
+  height: 400px;
 }
 
 #r{
