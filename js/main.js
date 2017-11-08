@@ -1,15 +1,19 @@
 // Global Variables --------------------------------------------------------
 $(function(){
+  var mainTheme = new Audio('images/background.mp3')
+  mainTheme.loop = true;
   $(document).keydown(function(e){
     if (e.keyCode ===13){
       startGame()
       $('#instructions').hide()
       $('.scoreBoard').show()
       $('#block2').removeClass('breakable').addClass('grass')
+      mainTheme.play()
     }
   })
 
   function startGame(){
+    var breakSound = new Audio('images/smash.mov')
     var startingTime = 40;
     var breakableIndexCurrent = 0;
     var player1Score = 0;
@@ -57,6 +61,7 @@ $(function(){
         $('#timer').attr('id', 'none');
         $('#container').hide()
         $('.lost-game').show();
+        mainTheme.pause()
         $(document).keydown(function(e){
           if (e.keyCode ===82){
             location.reload();
@@ -113,7 +118,7 @@ $(function(){
 
           if (fromTop % 5 === 0){
             //This stops the character from moving if he runs into a breakable block
-            if(jQuery.inArray(index+8, breakableIndex)&& mapArray[index+8]===1){
+            if(jQuery.inArray(index+8, breakableIndex)&& mapArray[index+8]===1 || mapArray[index+8] ===2){
               $('#bomberman').stop(true,true)
               $('#bomberman').css('top', '-=10')
               fromTop --
@@ -125,6 +130,7 @@ $(function(){
                     $('#block' +allIndexes[index+8]).removeClass('breakable').addClass('grass')
                     player1Score += 100
                     $('#player1').html(player1Score)
+                    breakSound.play()
                     winCheck()
                   }
                 }
@@ -146,7 +152,7 @@ $(function(){
           //if the player steps up into a new row, take 8 off the index
           if (fromTop %5 === 4){
             //This stops the character from moving if he runs into a breakable block
-            if (jQuery.inArray(index-8, breakableIndex)&&mapArray[index-8]===1){
+            if (jQuery.inArray(index-8, breakableIndex)&&mapArray[index-8]===1 || mapArray[index-8] ===2){
               $('#bomberman').stop(true,true)
               $('#bomberman').css('top', '+=10')
               fromTop ++
@@ -158,6 +164,7 @@ $(function(){
                     $('#block' +allIndexes[index-8]).removeClass('breakable').addClass('grass')
                     player1Score += 100
                     $('#player1').html(player1Score)
+                    breakSound.play()
                     winCheck()
                   }
                 }
@@ -176,7 +183,7 @@ $(function(){
           console.log(fromLeft)
           if (fromLeft %5 === 4){
             //This stops the character from moving if he runs into a breakable block
-            if (jQuery.inArray(index-1, breakableIndex)&&mapArray[index-1]===1){
+            if (jQuery.inArray(index-1, breakableIndex)&&mapArray[index-1]===1 || mapArray[index-1] ===2){
               $('#bomberman').stop(true,true)
               $('#bomberman').css('left', '+=10')
               fromLeft ++
@@ -187,6 +194,7 @@ $(function(){
                     mapArray[index-1]=0;
                     $('#block'+allIndexes[index-1]).removeClass('breakable').addClass('grass')
                     player1Score += 100
+                    breakSound.play()
                     winCheck()
                   }
                 }
@@ -196,7 +204,6 @@ $(function(){
               index --
             }
           }
-
         }
         break;
         case 'right':
@@ -206,7 +213,7 @@ $(function(){
           console.log(fromLeft)
           if (fromLeft % 5 ===0){
             //This stops the character from moving if he runs into a breakable block
-            if (jQuery.inArray(index+1, breakableIndex)&&mapArray[index+1]===1){
+            if (jQuery.inArray(index+1, breakableIndex)&&mapArray[index+1]===1 || mapArray[index+1] ===2){
               $('#bomberman').stop(true,true)
               $('#bomberman').css('left', '-=10')
               fromLeft --
@@ -217,6 +224,7 @@ $(function(){
                     mapArray[index+1]=0;
                     $('#block'+allIndexes[index+1]).removeClass('breakable').addClass('grass')
                     player1Score += 100
+                    breakSound.play()
                     winCheck()
                   }
                 }
