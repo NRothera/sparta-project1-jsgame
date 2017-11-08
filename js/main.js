@@ -13,7 +13,7 @@ $(function(){
     var startingTime = 40;
     var breakableIndexCurrent = 0;
     var player1Score = 0;
-    var fromLeft = 1;
+    var fromLeft = 0;
     var fromTop = 1;
     var index = 0;
     var score = 0;
@@ -109,24 +109,27 @@ $(function(){
         if ($('#bomberman').position().top < 370){
           $('#bomberman').animate({top: '+=10'}, charSpeed);
           fromTop ++;
+          console.log(fromTop)
 
-          //If the player steps down into a new row, add 8 to the index
           if (fromTop % 5 === 0){
+            //This stops the character from moving if he runs into a breakable block
             if(jQuery.inArray(index+8, breakableIndex)&& mapArray[index+8]===1){
               $('#bomberman').stop(true,true)
               $('#bomberman').css('top', '-=10')
               fromTop --
-
+              console.log(fromTop)
               $(document).keydown(function(e){
                 if (e.keyCode ===32){
-                  mapArray[index+8] =0
-                  $('#block' +allIndexes[index+8]).removeClass('breakable').addClass('grass')
-                  player1Score += 100
-                  $('#player1').html(player1Score)
-                  winCheck()
-
+                  if(jQuery.inArray(index+8, breakableIndex)&& mapArray[index+8]===1){
+                    mapArray[index+8] =0
+                    $('#block' +allIndexes[index+8]).removeClass('breakable').addClass('grass')
+                    player1Score += 100
+                    $('#player1').html(player1Score)
+                    winCheck()
+                  }
                 }
               })
+            //If the player steps down into a new row, and there is no block in the way, add 8 to index
             }else{
               index+=8
 
@@ -139,49 +142,56 @@ $(function(){
         if ($('#bomberman').position().top > 0){
           $('#bomberman').animate({top: '-=10'}, charSpeed);
           fromTop --
-
+          console.log(fromTop)
           //if the player steps up into a new row, take 8 off the index
           if (fromTop %5 === 4){
+            //This stops the character from moving if he runs into a breakable block
             if (jQuery.inArray(index-8, breakableIndex)&&mapArray[index-8]===1){
               $('#bomberman').stop(true,true)
               $('#bomberman').css('top', '+=10')
               fromTop ++
-
+              console.log(fromTop)
               $(document).keydown(function(e){
                 if (e.keyCode ===32){
-                  mapArray[index-8]=0;
-                  $('#block'+allIndexes[index-8]).removeClass('breakable').addClass('grass')
-                  player1Score += 100
-                  winCheck()
+                  if(jQuery.inArray(index-8, breakableIndex)&& mapArray[index-8]===1){
+                    mapArray[index-8] =0
+                    $('#block' +allIndexes[index-8]).removeClass('breakable').addClass('grass')
+                    player1Score += 100
+                    $('#player1').html(player1Score)
+                    winCheck()
+                  }
                 }
               })
+            //If the player steps up into a new row, and there is no block in the way, take away 8 to index
             }else{
               index -=8
             }
           }
-
           }
           break;
         case 'left':
         if ($('#bomberman').position().left >0){
           $('#bomberman').animate({left:'-=10'}, charSpeed);
           fromLeft --;
-
-          //if the player steps left into a column, take 1 off the index
+          console.log(fromLeft)
           if (fromLeft %5 === 4){
+            //This stops the character from moving if he runs into a breakable block
             if (jQuery.inArray(index-1, breakableIndex)&&mapArray[index-1]===1){
               $('#bomberman').stop(true,true)
               $('#bomberman').css('left', '+=10')
               fromLeft ++
-
+              console.log(fromLeft)
               $(document).keydown(function(e){
                 if (e.keyCode ===32){
-                  mapArray[index-1]=0;
-                  $('#block'+allIndexes[index-1]).removeClass('breakable').addClass('grass')
-                  player1Score += 100
-                  winCheck()
+                  if (jQuery.inArray(index-1, breakableIndex)&&mapArray[index-1]===1){
+                    mapArray[index-1]=0;
+                    $('#block'+allIndexes[index-1]).removeClass('breakable').addClass('grass')
+                    player1Score += 100
+                    winCheck()
+                  }
                 }
               })
+            //If the player steps left into a new column, and there is no block in the way, take 1 from the index
             }else{
               index --
             }
@@ -193,22 +203,25 @@ $(function(){
         if ($('#bomberman').position().left <380){
           $('#bomberman').animate({left: '+=10'}, charSpeed);
           fromLeft ++
-
-          //if player steps right into a column, add 1 to the index
+          console.log(fromLeft)
           if (fromLeft % 5 ===0){
+            //This stops the character from moving if he runs into a breakable block
             if (jQuery.inArray(index+1, breakableIndex)&&mapArray[index+1]===1){
               $('#bomberman').stop(true,true)
               $('#bomberman').css('left', '-=10')
               fromLeft --
-              
+              console.log(fromLeft)
               $(document).keydown(function(e){
                 if (e.keyCode ===32){
-                  mapArray[index+1]=0;
-                  $('#block'+allIndexes[index+1]).removeClass('breakable').addClass('grass')
-                  player1Score += 100
-                  winCheck()
+                  if (jQuery.inArray(index+1, breakableIndex)&&mapArray[index+1]===1){
+                    mapArray[index+1]=0;
+                    $('#block'+allIndexes[index+1]).removeClass('breakable').addClass('grass')
+                    player1Score += 100
+                    winCheck()
+                  }
                 }
               })
+            //If the player steps right into a new column, and there is no block in the way, add 1 to index
             }else{
               index ++
             }
@@ -260,7 +273,7 @@ $(function(){
     //This function checks if the player has gone over a breakable block
     function winCheck(){
         $('#player1').html(player1Score)
-        if (player1Score >= 30000){
+        if (player1Score >= 2000){
           $('#container').hide()
           $('.won-game').show()
           $('#timer').attr('id', 'none')
