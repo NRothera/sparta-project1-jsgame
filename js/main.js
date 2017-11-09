@@ -5,8 +5,8 @@ $(function(){
   var wonGame = new Audio('images/won.mp3');
   var mainTheme = new Audio('images/background.mp3');
   var newPlayer = new Audio('images/ding.mp3');
-  var startingTime = 70;
-  var gameTime = 30;
+  var startingTime = 30;
+  var gameTime = 15;
   var breakableIndexCurrent = 0;
   var player1Score = 0;
   var finalScorePlayer1 = 0;
@@ -181,7 +181,7 @@ $(function(){
   //Resets scores, variables and map for player 2 to take his turn
   function gameTwo() {
     gamesPlayed ++;
-    gameTime += 10;
+    gameTime += 15;
     if (gamesPlayed !=2) {
       newPlayer.play();
       $('#player2').html('0');
