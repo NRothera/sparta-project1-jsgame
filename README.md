@@ -33,3 +33,9 @@ I managed to implement all User Stories, although not all sub requirements withi
 Collision. I am super happy and proud that I managed to work out collision between my character and the surrounding blocks. It's collision in a funny way, instead of the Bomberman Sprite sending me information about where he is, I instead created two variables, fromTop and fromLeft. It takes five steps to either move across or up and down a block. If you move up or down, the index changes by 8, if you move left or right the index changes by 1. By using this knowledge I could keep an accurate track of the characters movement, and therefore create a fake collision. This then also allowed me to create functions that would stop the character into moving through blocks I didn't want him moving through
 
 I'm also pleased with how I have condensed my code into useable functions. I always understood functions but I was never very good at passing information across them. After this week I'm now much better at using them to pass information and therefore condense large sections of code which would otherwise be repeated.
+
+## Planning
+
+![Wire Frame](/Users/tech-a48/engineering/Javascript/project/sparta-project1-jsgame/images/wireframe.jpg)
+
+![Trello Board](/Users/tech-a48/engineering/Javascript/project/sparta-project1-jsgame/images/trello.png)
