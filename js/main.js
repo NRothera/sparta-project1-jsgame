@@ -298,6 +298,12 @@ $(function(){
     $(document).keydown(function(e) {
       if (e.keyCode ===32) {
         if (jQuery.inArray(index+indexAddition, breakableIndex) && mapArray[index+indexAddition] === 1) {
+          $('#block'+allIndexes[index+indexAddition]).append("<span id=bomb><img src='images/bomb.png' alt=></span>")
+          $('#bomb').show()
+          setInterval(function() {
+            $('#bomb').hide()
+            $('#bomb').attr('id', 'none')
+          }, 500);
           mapArray[index+indexAddition]=0;
           $('#block'+allIndexes[index+indexAddition]).removeClass('breakable').addClass('grass');
           player1Score += 100;

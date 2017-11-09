@@ -1,3 +1,7 @@
+body{
+  font-family: 'VT323', monospace;
+}
+
 #container {
   width:400px;
   height:400px;
@@ -72,7 +76,7 @@ body {
 #timer {
   position: absolute;
   top: 420px;
-  left:180px;
+  left:140px;
   color:yellow
 }
 
@@ -122,4 +126,9 @@ source {
 }
 #finalScore {
   color:red;
+}
+#bomb{
+  display: none;
+  z-index: 1;
+  position: absolute;
 }
