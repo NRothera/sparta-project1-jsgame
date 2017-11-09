@@ -65,21 +65,21 @@ $(function(){
         mainTheme.play();
         drawMap();
       }
-    })
+    });
   }
 
   //Where the game processes run
   function startGame(){
     //This sets the timer for each player. Once it reaches 0 it is the next players turn. After the next players turn it compares the score and tells you who won
     setInterval(function(){
-      $('#timer').html("Time Left: " + gameTime)
+      $('#timer').html("Time Left: " + gameTime);
       startingTime--;
-      gameTime--
+      gameTime--;
       if (gameTime === 0 && gamesPlayed <2){
-        gameTwo()
+        gameTwo();
       }
       if (gamesPlayed ===2){
-        hasWon()
+        hasWon();
       }
     },1000);
     //This make it so that the character can only walk in one direction at a time
@@ -96,9 +96,7 @@ $(function(){
     // Character Movement. The charWalk function correlates to the processWalk function which uses the move functions to judge where the character is going, what's in his way and if he can destroy obstacles
     $(document).keydown(function(e){
       if (!currentKey){
-
         currentKey = e.keyCode;
-
         switch(e.keyCode){
           case 87: charWalk('up'); break;
           case 68: charWalk('right'); break;
@@ -106,7 +104,7 @@ $(function(){
           case 65: charWalk('left'); break;
         }
       }
-    })
+    });
   }
 
 //Functions
@@ -138,10 +136,8 @@ $(function(){
   function processWalk(dir){
     charStep ++;
     if (charStep === 5) charStep = 1;
-
     //removes class
     $('#bomberman').removeAttr('class');
-
     //add class for direction moving
     switch(charStep){
       case 1: $('#bomberman').addClass(dir); break;
@@ -159,10 +155,10 @@ $(function(){
         backMove();
       break;
       case 'left':
-        leftMove()
+        leftMove();
       break;
       case 'right':
-        rightMove()
+        rightMove();
       break;
     }
   }
@@ -175,15 +171,18 @@ $(function(){
     processWalk(dir);
     //Make him walk at a regular pace
     timerWalk = setInterval(function(){
-      processWalk(dir);}, charSpeed);
+      processWalk(dir);
+    }, charSpeed);
   }
 
   function gameTwo(){
     $('#bomberman').css('left', '0').css('top', '0');
     gamesPlayed ++;
-    gameTime += 14;
-    $('#player2').show();
+    gameTime += 5;
     if (gamesPlayed !=2){
+      $('#player2').html('0')
+      $('#player2').show();
+      player2Score = 0;
       finalScorePlayer1 = player1Score;
       $('finalScore').html(finalScorePlayer1);
     }
@@ -197,6 +196,7 @@ $(function(){
     breakableIndexCurrent = 0;
     drawMap()
     $('#block2').removeClass('breakable').addClass('grass');
+
   }
 
   //At the end, check which player has won, or if its a draw
@@ -347,12 +347,13 @@ $(function(){
   }
 
   //This stops the screen scrolling when using keyboard
-  window.addEventListener("keydown", function(e) {
-    // space and arrow keys
-    if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+  function stopScroll(){
+    window.addEventListener("keydown", function(e) {
+        // space and arrow keys
+      if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
         e.preventDefault();
-    }
-  }, false);
-
-
+      }
+    }, false);
+  }
+  stopScroll()
 })
