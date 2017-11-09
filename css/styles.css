@@ -1,4 +1,4 @@
-#container{
+#container {
   width:400px;
   height:400px;
   position: absolute;
@@ -7,12 +7,12 @@
   border:2px brown solid;
 }
 
-.endOfGame{
+.endOfGame {
   background-color: red;
   z-index: 1;
 }
 
-#bomberman{
+#bomberman {
   position: absolute;
   width:15px;
   height:22px;
@@ -38,7 +38,7 @@
 #bomberman.right-one {background-position: -145px 0px;}
 #bomberman.right-two {background-position: -159.5px 0px;}
 
-.grass{
+.grass {
   height:50px;
   width:50px;
   position: relative;
@@ -47,7 +47,7 @@
   outline: 1px solid grey;
 }
 
-.breakable{
+.breakable {
   height:50px;
   width:50px;
   position: relative;
@@ -57,7 +57,7 @@
   outline: 1px solid black;
 }
 
-.unbreakable{
+.unbreakable {
   height:50px;
   width:50px;
   position: relative;
@@ -66,18 +66,18 @@
   outline: 1px solid black;
 }
 
-body{
+body {
   background-color: black;
 }
 
-#timer{
+#timer {
   position: absolute;
   top: 420px;
   left:180px;
   color:yellow
 }
 
-#player1Won{
+#player1Won {
   width:400px;
   display: none;
   background-color: #2E2E2E;
@@ -87,7 +87,7 @@ body{
   color: yellow;
   font-family: 'Architects Daughter', cursive;
 }
-#player2Won{
+#player2Won {
   width:400px;
   display: none;
   background-color: #2E2E2E;
@@ -98,7 +98,7 @@ body{
   font-family: 'Architects Daughter', cursive;
 }
 
-#draw{
+#draw {
   width:400px;
   display: none;
   background-color: #2E2E2E;
@@ -108,18 +108,19 @@ body{
   color: yellow;
   font-family: 'Architects Daughter', cursive;
 }
-.lost-game{
+
+.lost-game {
   width:400px;
   display: none;
 }
 
-source{
+source {
   display: none;
 }
 
-#sound{
+#sound {
   display: none;
 }
-#finalScore{
+#finalScore {
   color:red;
 }
