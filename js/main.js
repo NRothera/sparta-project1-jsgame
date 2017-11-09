@@ -57,7 +57,7 @@ $(function(){
   function enterStart() {
     $(document).keydown(function(e) {
       if (e.keyCode ===13) {
-        startPage.pause()
+        startPage.pause();
         mainTheme.play();
         startGame();
         $('#instructions').hide();
@@ -75,7 +75,7 @@ $(function(){
       $('#timer').html("Time Left: " + gameTime);
       startingTime--;
       gameTime--;
-      if (gameTime <3){
+      if (gameTime <3) {
         $('#bomberman').stop(true,true);
       }
       if (gameTime === 0 && gamesPlayed <2) {
@@ -96,10 +96,10 @@ $(function(){
       }
     })
     // Character Movement. The charWalk function correlates to the processWalk function which uses the move functions to judge where the character is going, what's in his way and if he can destroy obstacles
-    $(document).keydown(function(e){
-      if (!currentKey){
+    $(document).keydown(function(e) {
+      if (!currentKey) {
         currentKey = e.keyCode;
-        switch(e.keyCode){
+        switch(e.keyCode) {
           case 87: charWalk('up'); break;
           case 68: charWalk('right'); break;
           case 83: charWalk('down'); break;
@@ -183,7 +183,7 @@ $(function(){
     gamesPlayed ++;
     gameTime += 10;
     if (gamesPlayed !=2) {
-      newPlayer.play()
+      newPlayer.play();
       $('#player2').html('0');
       $('#player2').show();
       player2Score = 0;
@@ -211,29 +211,29 @@ $(function(){
     $('#timer').hide();
     if (player2Score > finalScorePlayer1) {
       $('#player2Won').show();
-      reloadPage()
+      reloadPage();
     } else if (finalScorePlayer1> player2Score) {
       $('#player1Won').show();
-      reloadPage()
+      reloadPage();
     } else {
       $('#draw').show();
-        reloadPage()
+        reloadPage();
       }
     }
 
   //Adds to the player score if they destroy a block
   function winCheck(){
-    $('#player1').html(player1Score)
-    $('#player2').html(player2Score)
+    $('#player1').html(player1Score);
+    $('#player2').html(player2Score);
   }
 
   //Index update for moving right, block check for right
   function rightMove() {
     if ($('#bomberman').position().left <380) {
       $('#bomberman').animate({left: '+=10'}, charSpeed);
-      fromLeft ++
+      fromLeft ++;
       if (fromLeft % 5 ===0) {
-        stopMovementIfBlock(1, 'left','-=10')
+        stopMovementIfBlock(1, 'left','-=10');
       }
     }
   }
@@ -253,10 +253,10 @@ $(function(){
   function backMove() {
       if ($('#bomberman').position().top > 0) {
         $('#bomberman').animate({top: '-=10'}, charSpeed);
-        fromTop --
+        fromTop --;
         //if the player steps up into a new row, take 8 off the index
         if (fromTop %5 === 4) {
-          stopMovementIfBlock(-8, 'top','+=10')
+          stopMovementIfBlock(-8, 'top','+=10');
         }
       }
     }
@@ -282,9 +282,9 @@ $(function(){
       } else if (indexNum === -8) {
         fromTop ++;
       } else if (indexNum ===1) {
-        fromLeft --
+        fromLeft --;
       } else {
-        fromTop --
+        fromTop --;
       }
       breakBox(indexNum);
     //If the player steps left into a new column, and there is no block in the way, take 1 from the index
@@ -298,11 +298,11 @@ $(function(){
     $(document).keydown(function(e) {
       if (e.keyCode ===32) {
         if (jQuery.inArray(index+indexAddition, breakableIndex) && mapArray[index+indexAddition] === 1) {
-          $('#block'+allIndexes[index+indexAddition]).append("<span id=bomb><img src='images/bomb.png' alt=></span>")
-          $('#bomb').show()
+          $('#block'+allIndexes[index+indexAddition]).append("<span id=bomb><img src='images/bomb.png' alt=></span>");
+          $('#bomb').show();
           setInterval(function() {
-            $('#bomb').hide()
-            $('#bomb').attr('id', 'none')
+            $('#bomb').hide();
+            $('#bomb').attr('id', 'none');
           }, 500);
           mapArray[index+indexAddition]=0;
           $('#block'+allIndexes[index+indexAddition]).removeClass('breakable').addClass('grass');
