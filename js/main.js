@@ -4,8 +4,8 @@ $(function(){
   var breakSound = new Audio('images/smash.mp3');
   var wonGame = new Audio('images/won.mp3');
   var mainTheme = new Audio('images/background.mp3');
-  var startingTime = 10;
-  var gameTime = 5;
+  var startingTime = 20;
+  var gameTime = 10;
   var breakableIndexCurrent = 0;
   var player1Score = 0;
   var finalScorePlayer1 = 0;
@@ -61,9 +61,9 @@ $(function(){
         startGame();
         $('#instructions').hide();
         $('.scoreBoard').show();
-        $('#block2').removeClass('breakable').addClass('grass');
         mainTheme.play();
         drawMap();
+        $('#block2').removeClass('breakable').addClass('grass');
       }
     });
   }
@@ -178,7 +178,7 @@ $(function(){
   function gameTwo(){
     $('#bomberman').css('left', '0').css('top', '0');
     gamesPlayed ++;
-    gameTime += 5;
+    gameTime += 10;
     if (gamesPlayed !=2){
       $('#player2').html('0');
       $('#player2').show();
@@ -249,19 +249,11 @@ $(function(){
       fromLeft --;
       if (fromLeft %5 === 4){
         //This stops the character from moving if he runs into a breakable block
-        if (jQuery.inArray(index-1, breakableIndex)&&mapArray[index-1]===1 || mapArray[index-1] ===2){
-          $('#bomberman').stop(true,true);
-          $('#bomberman').css('left', '+=10');
-          fromLeft ++;
-          breakBox(-1);
-        //If the player steps left into a new column, and there is no block in the way, take 1 from the index
-        }else{
-          index --;
-        }
+        stopMovement(-1, 'left','+=10')
       }
     }
   }
-  
+  // stopMovement(-8, 'top','+=10')
 
   //If the character is moving into a non-grass block, stop him from moving
   function stopMovement(indexNum, direction, movement){
@@ -272,7 +264,7 @@ $(function(){
       breakBox(indexNum);
     //If the player steps left into a new column, and there is no block in the way, take 1 from the index
     }else{
-      index --;
+      index += indexNum;
     }
   }
 
@@ -283,16 +275,7 @@ $(function(){
         fromTop --
         //if the player steps up into a new row, take 8 off the index
         if (fromTop %5 === 4){
-          //This stops the character from moving if he runs into a breakable block
-          if (jQuery.inArray(index-8, breakableIndex)&&mapArray[index-8]===1 || mapArray[index-8] ===2){
-            $('#bomberman').stop(true,true)
-            $('#bomberman').css('top', '+=10')
-            fromTop ++
-            breakBox(-8)
-          //If the player steps up into a new row, and there is no block in the way, take away 8 to index
-          }else{
-            index -=8
-          }
+          stopMovement(-8, 'top','+=10')
         }
       }
     }
