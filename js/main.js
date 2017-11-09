@@ -2,8 +2,11 @@ $(function(){
   // Global Variables --------------------------------------------------------
   var gamesPlayed = 0;
   var startPage = new Audio('images/startPage.mp3');
-  var startingTime = 20;
-  var gameTime = 10;
+  var wonGame = new Audio('images/won.mp3');
+  var mainTheme = new Audio('images/background.mp3');
+  var newPlayer = new Audio('images/ding.mp3');
+  var startingTime = 70;
+  var gameTime = 30;
   var breakableIndexCurrent = 0;
   var player1Score = 0;
   var finalScorePlayer1 = 0;
@@ -49,18 +52,16 @@ $(function(){
 
   //Game running and map creation -------------------------------------------
   startPage.play()
-  enterStart()
 
   //Allows you to start the game by pressing the enter key
   function enterStart() {
     $(document).keydown(function(e) {
       if (e.keyCode ===13) {
-        var mainTheme = new Audio('images/background.mp3');
         startPage.pause()
+        mainTheme.play();
         startGame();
         $('#instructions').hide();
         $('.scoreBoard').show();
-        mainTheme.play();
         drawMap();
         $('#block2').removeClass('breakable').addClass('grass');
       }
@@ -86,7 +87,6 @@ $(function(){
     }, 1000);
     //This make it so that the character can only walk in one direction at a time
     $(document).keyup(function(e) {
-
       //This make it so the bomberman keeps moving until the button down is released
       if (e.keyCode === currentKey) {
         //This make it so a new key can be pressed after current key is released
@@ -112,6 +112,7 @@ $(function(){
 //Functions
 // -----------------------------------------------------------------
 
+  //returns index while map is being drawn
   function rowColToArrayIndex(col, row) {
     return col + 8 * row;
   };
@@ -182,7 +183,6 @@ $(function(){
     gamesPlayed ++;
     gameTime += 10;
     if (gamesPlayed !=2) {
-      var newPlayer = new Audio('images/ding.mp3');
       newPlayer.play()
       $('#player2').html('0');
       $('#player2').show();
@@ -205,7 +205,6 @@ $(function(){
 
   //At the end, check which player has won, or if its a draw
   function hasWon() {
-    var wonGame = new Audio('images/won.mp3');
     mainTheme.pause();
     wonGame.play();
     $('#container').hide();
@@ -234,7 +233,7 @@ $(function(){
       $('#bomberman').animate({left: '+=10'}, charSpeed);
       fromLeft ++
       if (fromLeft % 5 ===0) {
-        stopMovement(1, 'left','-=10')
+        stopMovementIfBlock(1, 'left','-=10')
       }
     }
   }
@@ -245,11 +244,10 @@ $(function(){
       $('#bomberman').animate({left:'-=10'}, charSpeed);
       fromLeft --;
       if (fromLeft %5 === 4) {
-        stopMovement(-1, 'left','+=10')
+        stopMovementIfBlock(-1, 'left','+=10')
       }
     }
   }
-
 
   //This function occurs for when the character moves down the screen
   function backMove() {
@@ -258,7 +256,7 @@ $(function(){
         fromTop --
         //if the player steps up into a new row, take 8 off the index
         if (fromTop %5 === 4) {
-          stopMovement(-8, 'top','+=10')
+          stopMovementIfBlock(-8, 'top','+=10')
         }
       }
     }
@@ -269,14 +267,13 @@ $(function(){
       $('#bomberman').animate({top: '+=10'}, charSpeed);
       fromTop ++;
       if (fromTop % 5 === 0) {
-        stopMovement(8, 'top','-=10');
+        stopMovementIfBlock(8, 'top','-=10');
       }
     }
   }
 
-
   //If the character is moving into a non-grass block, stop him from moving
-  function stopMovement(indexNum, direction, movement) {
+  function stopMovementIfBlock(indexNum, direction, movement) {
     if (jQuery.inArray(index + indexNum, breakableIndex) && mapArray[index+indexNum] === 1 || mapArray[index+indexNum] ===2) {
       $('#bomberman').stop(true,true);
       $('#bomberman').css(direction, movement);
@@ -332,5 +329,6 @@ $(function(){
     });
   }
 
+  enterStart()
   stopScroll()
 })
