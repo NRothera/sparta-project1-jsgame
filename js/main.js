@@ -180,7 +180,7 @@ $(function(){
     gamesPlayed ++;
     gameTime += 5;
     if (gamesPlayed !=2){
-      $('#player2').html('0')
+      $('#player2').html('0');
       $('#player2').show();
       player2Score = 0;
       finalScorePlayer1 = player1Score;
@@ -194,40 +194,27 @@ $(function(){
     fromLeft = 0;
     arrayIndex = 0;
     breakableIndexCurrent = 0;
-    drawMap()
+    drawMap();
     $('#block2').removeClass('breakable').addClass('grass');
-
   }
 
   //At the end, check which player has won, or if its a draw
   function hasWon(){
-    mainTheme.pause()
-    wonGame.play()
-    $('#container').hide()
-    $('#timer').hide()
+    mainTheme.pause();
+    wonGame.play();
+    $('#container').hide();
+    $('#timer').hide();
     if (player2Score > finalScorePlayer1){
-      $('#player2Won').show()
-      $(document).keydown(function(e){
-        if (e.keyCode === 82){
-          location.reload()
-        }
-      })
+      $('#player2Won').show();
+      reloadPage()
     }else if (finalScorePlayer1> player2Score){
-      $('#player1Won').show()
-      $(document).keydown(function(e){
-        if (e.keyCode === 82){
-          location.reload()
-        }
-      })
+      $('#player1Won').show();
+      reloadPage()
     }else{
-      $('#draw').show()
-      $(document).keydown(function(e){
-        if (e.keyCode === 82){
-          location.reload()
-        }
-      })
+      $('#draw').show();
+        reloadPage()
+      }
     }
-  }
 
   //Adds to the player score if they destroy a block
   function winCheck(){
@@ -274,14 +261,15 @@ $(function(){
       }
     }
   }
+  
 
   //If the character is moving into a non-grass block, stop him from moving
-  function stopMovement(indexNum, movement){
+  function stopMovement(indexNum, direction, movement){
     if (jQuery.inArray(index+indexNum, breakableIndex)&&mapArray[index+indexNum]===1 || mapArray[index+indexNum] ===2){
       $('#bomberman').stop(true,true);
       $('#bomberman').css('left', '+=10');
       fromLeft ++;
-      breakBox(-1);
+      breakBox(indexNum);
     //If the player steps left into a new column, and there is no block in the way, take 1 from the index
     }else{
       index --;
@@ -354,6 +342,14 @@ $(function(){
         e.preventDefault();
       }
     }, false);
+  }
+
+  function reloadPage(){
+    $(document).keydown(function(e){
+      if (e.keyCode === 82){
+        location.reload();
+      }
+    });
   }
   stopScroll()
 })
