@@ -1,23 +1,29 @@
-.scoreBoard{
+.scoreBoard {
   display: none;
   position: absolute;
   left: 420px;
   color: yellow;
   top:7px;
   background-color: #2E2E2E;
-  width: 100px;
+  width: 200px;
   border: 5px grey ridge;
+  font-size: 20px;
 }
 
-#player1{
+#timer {
+  font-size: 25px;
+}
+
+#player1 {
   color:red;
 }
 
-#player2{
+#player2 {
+  display: none;
   color: blue;
 }
 
-h1{
+h1 {
   size:40px;
   color:yellow;
 

@@ -1,8 +1,8 @@
-body{
+body {
   background-color: black;
 }
 
-#instructions{
+#instructions {
   background-color: #2E2E2E;
   height: 400px;
   width:380px;
@@ -10,8 +10,9 @@ body{
   left:0;
   top:0;
   border: 2px ridge orange;
-  font-size: 20px;
+  font-size: 25px;
   color: yellow;
-  font-family: 'Architects Daughter', cursive;
+  font-family: 'VT323', monospace;
   padding: 0px 10px;
+  text-align: center;
 }

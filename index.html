@@ -9,38 +9,44 @@
     <link rel="stylesheet" href="css/scores.css">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/instructions.css">
-
+    <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
     <title></title>
   </head>
   <body>
 
     <div id="instructions">
-        <p>Welcome to Bomberman Lite!</p>
-        <p>Your task is to break as many boxes on the screen as you can! If you get to 40000 points before the time reaches 0, you win!</p>
-        <p>Use W to move up, D to move right, S to move down and A to move left. Tap the buttons to run</p>
+        <p>Welcome to Bomberman vs Blocks!</p>
+        <p>Your task is to break as many boxes on the screen as you can within 15 seconds. Once the time runs out, your opponent has 15 seconds to beat your score!</p>
+        <p>Tap W to move up, D to move right, S to move down and A to move left.</p>
         <p>Press enter when you are ready to start</p>
     </div>
 
+
     <div id="container">
-      <div id="bomberman"></div>
-      <div id="bomberman2"></div>
+      <span id="bomberman"></span>
     </div>
 
     <div class="scoreBoard">
       <h3>Player 1: <br><span id="player1">0</span></h3>
+      <h3>Player 2: <br><span id="player2">0</span></h3>
     </div>
 
-    <div class="won-game">
-      <h1>Well done, you won!</h1>
-      <h1>Press <span id="r">r</span> if you want to play again</h1>
-
+    <div id="player1Won">
+      Well done player 1!!
+      <br>
+      Press R to play again
+    </div>
+    <div id="player2Won">
+      Well done player 2!
+      <br>
+      Press R to play again
     </div>
 
-    <div class="lost-game">
-      <h1>Oh no you lost!</h1>
-      <h1>Press <span id="r">r</span> if you want to play again</h1>
+    <div id="draw">
+      It's a draw!
+      <br>
+      Press R to play again
     </div>
-
 
     <div id="timer"></div>
 

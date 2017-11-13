@@ -1,4 +1,8 @@
-#container{
+body{
+  font-family: 'VT323', monospace;
+}
+
+#container {
   width:400px;
   height:400px;
   position: absolute;
@@ -7,17 +11,19 @@
   border:2px brown solid;
 }
 
-.endOfGame{
+.endOfGame {
   background-color: red;
   z-index: 1;
 }
 
-#bomberman{
+#bomberman {
   position: absolute;
   width:15px;
   height:22px;
-  background: url('../images/white_bomberman.gif');
+  background-image: url('../images/white_bomberman.gif');
   z-index: 1;
+  left: 0;
+  top:0;
 }
 
 #bomberman.front {background-position: 0px 0px}
@@ -36,16 +42,15 @@
 #bomberman.right-one {background-position: -145px 0px;}
 #bomberman.right-two {background-position: -159.5px 0px;}
 
-.grass{
+.grass {
   height:50px;
   width:50px;
   position: relative;
   float: left;
   background: url('../images/grass.png');
-  outline: 1px solid grey;
 }
 
-.breakable{
+.breakable {
   height:50px;
   width:50px;
   position: relative;
@@ -55,7 +60,7 @@
   outline: 1px solid black;
 }
 
-.unbreakable{
+.unbreakable {
   height:50px;
   width:50px;
   position: relative;
@@ -64,36 +69,69 @@
   outline: 1px solid black;
 }
 
-body{
+body {
   background-color: black;
 }
 
-#timer{
+#timer {
   position: absolute;
   top: 420px;
-  left:180px;
+  left:140px;
   color:yellow
 }
 
-.won-game{
+#player1Won {
+  width:400px;
+  display: none;
+  background-color: #2E2E2E;
+  border: 3px orange ridge;
+  height: 400px;
+  font-size: 40px;
+  color: yellow;
+  font-family: 'Architects Daughter', cursive;
+}
+
+#player2Won {
+  width:400px;
+  display: none;
+  background-color: #2E2E2E;
+  border: 3px orange ridge;
+  height: 400px;
+  font-size: 40px;
+  color: yellow;
+  font-family: 'Architects Daughter', cursive;
+}
+
+#draw {
+  width:400px;
+  display: none;
+  background-color: #2E2E2E;
+  border: 3px orange ridge;
+  height: 400px;
+  font-size: 40px;
+  color: yellow;
+  font-family: 'Architects Daughter', cursive;
+}
+
+.lost-game {
   width:400px;
   display: none;
 }
 
-#r{
-  font-size: 55px;
-  color: red;
-}
-
-.lost-game{
-  width:400px;
+source {
   display: none;
 }
 
-source{
+#sound {
   display: none;
 }
 
-#sound{
+#finalScore {
+  color:red;
+}
+
+#bomb{
   display: none;
+  z-index: 1;
+  position: absolute;
 }
